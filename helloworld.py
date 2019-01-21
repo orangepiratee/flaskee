@@ -6,6 +6,8 @@ from flask_moment import Moment
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
+from flask_sqlalchemy import SQLAlchemy
+import pymysql,os
 
 from datetime import datetime
 
@@ -14,10 +16,22 @@ class NameForm(FlaskForm):
     submit = SubmitField('Submit')
 
 app = Flask(__name__)
+#config private key
 app.config['SECRET_KEY'] = 'nothing'
+#config sqlalchemy uri to mysql
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://debian-sys-maint:root@localhost:3306/flaskee'
+app.config['SQLALCHEMY_COMMIT_TEARDOWN'] = True
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
+db = SQLAlchemy(app)
+#moment module to get system time
 moment = Moment(app)
+#bootstrap
 bootstrap = Bootstrap(app)
+#some variables
+basepath = os.path.abspath(os.path.dirname(__file__))
 
+#routes
 @app.route('/', methods=['GET','POST'])
 def index():
     form = NameForm()
