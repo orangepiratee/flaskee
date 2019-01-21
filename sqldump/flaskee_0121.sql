@@ -16,6 +16,35 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `message`
+--
+
+DROP TABLE IF EXISTS `message`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `message` (
+  `m_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '		',
+  `m_title` varchar(255) NOT NULL COMMENT '\n',
+  `m_content` varchar(255) NOT NULL,
+  `m_author` int(11) NOT NULL,
+  `m_datetime` datetime NOT NULL,
+  `m_class` varchar(255) DEFAULT NULL,
+  `m_accept` int(11) NOT NULL,
+  `m_read` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`m_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `message`
+--
+
+LOCK TABLES `message` WRITE;
+/*!40000 ALTER TABLE `message` DISABLE KEYS */;
+/*!40000 ALTER TABLE `message` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `user`
 --
 
@@ -23,14 +52,14 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user` (
-  `userId` int(11) NOT NULL AUTO_INCREMENT,
-  `userName` varchar(255) NOT NULL,
-  `userPasswd` varchar(255) NOT NULL,
-  `available` int(11) NOT NULL,
-  `regTime` datetime NOT NULL,
-  `lastLoginTime` datetime DEFAULT NULL,
-  `userDepartment` int(11) NOT NULL,
-  PRIMARY KEY (`userId`)
+  `u_id` int(11) NOT NULL AUTO_INCREMENT,
+  `u_name` varchar(255) NOT NULL,
+  `u_passwd` varchar(255) NOT NULL,
+  `u_available` int(11) NOT NULL,
+  `u_regTime` datetime NOT NULL,
+  `u_lastLoginTime` datetime DEFAULT NULL,
+  `u_department` int(11) NOT NULL,
+  PRIMARY KEY (`u_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -52,4 +81,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-01-20 21:45:13
+-- Dump completed on 2019-01-20 23:23:37
