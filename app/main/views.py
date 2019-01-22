@@ -8,6 +8,7 @@ from .. import db
 from ..models import User
 
 
+
 @main.route('/', methods=['GET','POST'])
 def index():
     form = NameForm()
@@ -23,3 +24,4 @@ def overview():
 @main.route('/analysis')
 def analysis():
     return render_template('analysis.html')
+

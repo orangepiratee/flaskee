@@ -4,8 +4,6 @@ from app import db
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from . import login_manager
-
 class User(UserMixin, db.Model):
     __tablename__ = 'user'
     user_id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
@@ -27,6 +25,7 @@ class Item(db.Model):
     item_author = db.Column(db.Integer, nullable=False)
     item_read = db.Column(db.Integer, nullable=False, default=0)
     item_accept = db.Column(db.Integer, nullable=False, default=0)
+    item_delete = db.Column(db.Integer, nullable=False, default=0)
 
     @property
     def user_password(self):
@@ -39,9 +38,6 @@ class Item(db.Model):
     def verify_password(self, password):
         return check_password_hash(self.user_password, password)
 
+
 def __repr__(self):
     return '<User %r>' % self.user_name
-
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
