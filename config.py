@@ -3,14 +3,6 @@ import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 class Config:
-    # config private key
-    # config sqlalchemy connecting to mysql
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://debian-sys-maint:root@localhost:3306/flaskee'
-    SQLALCHEMY_COMMIT_TEARDOWN = True
-    SQLALCHEMY_TRACK_MODIFICATIONS = True
-    SQLALCHEMY_COMMIT_ON_TEARDOWN = True
-
-class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'hard to guess string'
     SSL_REDIRECT = False
     SQLALCHEMY_RECORD_QUERIES = True
@@ -34,6 +26,5 @@ class DevelopmentConfig(Config):
 
 
 config = {
-    'development': DevelopmentConfig,
-    'default': DevelopmentConfig
+    'development': DevelopmentConfig
 }
