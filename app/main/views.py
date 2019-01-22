@@ -25,3 +25,7 @@ def overview():
 def analysis():
     return render_template('analysis.html')
 
+@main.route('/management')
+def management():
+    return redirect(url_for('.index'))
+
