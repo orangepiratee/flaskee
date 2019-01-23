@@ -27,8 +27,12 @@ class ProductionConfig(Config):
     DEBUG = False
     SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://debian-sys-maint:root@localhost:3306/flasky'
 
+class TestConfig(Config):
+    DEBUG = True
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://debian-sys-maint:root@localhost:3306/flasky'
 
 config = {
     'development': DevelopmentConfig,
-    'production': ProductionConfig
+    'production': ProductionConfig,
+    'testmode': TestConfig
 }
