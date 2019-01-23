@@ -13,7 +13,8 @@ from ..models import User
 def index():
     form = NameForm()
     if form.validate_on_submit():
-        return redirect(url_for('.index'))
+        #return redirect(url_for('.index'))
+        db.create_all()
     return render_template('index.html',form=form,username=session.get('username'),
                            known=session.get('known',False),current_time=datetime.utcnow())
 
@@ -27,5 +28,11 @@ def analysis():
 
 @main.route('/management')
 def management():
-    return redirect(url_for('.index'))
+    return render_template('management.html')
+@main.route('/signin')
+def signin():
+    return redirect('auth/signin')
 
+@main.route('/signup')
+def signup():
+    return redirect('auth/signup')

@@ -14,5 +14,6 @@ def make_shell_context():
 
 
 if __name__ == '__main__':
+    #db.app = app
+    #db.create_all()
     app.run()
-

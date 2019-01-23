@@ -5,7 +5,7 @@ from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
 class User(UserMixin, db.Model):
-    __tablename__ = 'user'
+    __tablename__ = 'users'
     user_id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
     user_name = db.Column(db.String(255), unique=True, nullable=False)
     user_password = db.Column(db.String(128), unique=True, nullable=False)
@@ -16,7 +16,7 @@ class User(UserMixin, db.Model):
     user_role = db.Column(db.Integer)
 
 class Item(db.Model):
-    __tablename__ = 'item'
+    __tablename__ = 'items'
     item_id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
     item_title = db.Column(db.String(255), nullable=False)
     item_content = db.Column(db.Text, nullable=False)
