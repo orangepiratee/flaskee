@@ -24,6 +24,10 @@ class User(UserMixin, db.Model):
     user_lastlogtime = Column(DateTime)
 
     @property
+    def id(self):
+        return self.user_id
+
+    @property
     def password(self):
         raise AttributeError('password is not a readable attribute')
 
