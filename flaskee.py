@@ -13,6 +13,7 @@ from flask_migrate import Migrate
 if __name__ == '__main__':
     #db.app = app
     #db.create_all()
-    str = input('input the mode:')
+    #str = input('input the mode:')
+    str = 'development'
     app = create_app(str)
     app.run()

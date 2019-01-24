@@ -6,13 +6,14 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy import Column, DateTime, String, Text, text
 from sqlalchemy.dialects.mysql import INTEGER
 from sqlalchemy.ext.declarative import declarative_base
+from . import login_manager
 
 Base = declarative_base()
 metadata = Base.metadata
 
 # rewrite the User Item extends to model( which is autogenerate from  mysql through sqlacodegen)
 class User(UserMixin, db.Model):
-    __tablename__ = 'items'
+    __tablename__ = 't_item'
 
     item_id = Column(INTEGER(11), primary_key=True)
     item_title = Column(String(255), nullable=False)
@@ -35,9 +36,12 @@ class User(UserMixin, db.Model):
     def verify_password(self, password):
         return check_password_hash(self.user_password, password)
 
+    def __repr__(self):
+        return '<User %r>' % self.user_name
+
 
 class Item(db.Model):
-    __tablename__ = 'users'
+    __tablename__ = 't_user'
 
     user_id = Column(INTEGER(11), primary_key=True)
     user_name = Column(String(255), nullable=False)
@@ -49,5 +53,6 @@ class Item(db.Model):
     user_lastlogtime = Column(DateTime)
 
 
-def __repr__(self):
-    return '<User %r>' % self.user_name
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))

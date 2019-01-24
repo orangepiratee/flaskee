@@ -6,6 +6,7 @@ from . import main
 from .forms import NameForm
 from .. import db
 from ..models import User
+from flask_login import login_required
 
 
 
@@ -23,12 +24,15 @@ def overview():
     return render_template('overview.html')
 
 @main.route('/analysis')
+@login_required
 def analysis():
     return render_template('analysis.html')
 
 @main.route('/management')
+@login_required
 def management():
     return render_template('management.html')
+
 @main.route('/signin')
 def signin():
     return redirect('auth/signin')
@@ -36,3 +40,7 @@ def signin():
 @main.route('/signup')
 def signup():
     return redirect('auth/signup')
+
+@main.route('/signout')
+def signout():
+    return redirect('auth/signout')

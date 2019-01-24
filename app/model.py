@@ -1,7 +1,4 @@
 # coding: utf-8
-# auto generate model.py from mysql.flaskee through sqlacodegen
-# sqlacodegen mysql+pymysql://debian-sys-maint:root@localhost:3306/flaskee > app/model.py
-
 from sqlalchemy import Column, DateTime, String, Text, text
 from sqlalchemy.dialects.mysql import INTEGER
 from sqlalchemy.ext.declarative import declarative_base
@@ -10,8 +7,8 @@ Base = declarative_base()
 metadata = Base.metadata
 
 
-class Item(Base):
-    __tablename__ = 'items'
+class TItem(Base):
+    __tablename__ = 't_item'
 
     item_id = Column(INTEGER(11), primary_key=True)
     item_title = Column(String(255), nullable=False)
@@ -24,8 +21,8 @@ class Item(Base):
     item_delete = Column(INTEGER(11), nullable=False, server_default=text("'0'"))
 
 
-class User(Base):
-    __tablename__ = 'users'
+class TUser(Base):
+    __tablename__ = 't_user'
 
     user_id = Column(INTEGER(11), primary_key=True)
     user_name = Column(String(255), nullable=False)

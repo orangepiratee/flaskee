@@ -23,7 +23,12 @@
                 <li><a href="/signup">SignUp</a></li>
             </ul>
            <ul class="nav navbar-nav navbar-right">
-               <li><a href=""> {% if name %}{{name}}{% else %}Stranger{% endif %}</a></li>
+               {% if current_user.is_authenticated %}
+               <li><a href="{{ url_for('auth.signout') }}">SignOut</a></li>
+               {% else %}
+               <li><a href="{{ url_for('auth.signin') }}">SignIn</a></li>
+               <li><a href="{{ url_for('auth.signup') }}">SignUp</a></li>
+               {% endif %}
 
             </ul>
         </div>
