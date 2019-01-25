@@ -45,7 +45,7 @@ class User(UserMixin, db.Model):
     user_regtime = Column(DateTime)
     user_lastlogtime = Column(DateTime)
 
- #   item = db.relationship('Item', backref='item_id')
+    items = db.relationship('Item', backref='user')
 
     @property
     def id(self):
@@ -90,7 +90,7 @@ class Item(db.Model):
     item_attachment = Column(String(255))
     item_author = Column(INTEGER(11),ForeignKey('t_user.user_id'), nullable=False, index=True)
 
-    t_user = db.relationship('User')
+    #t_user = db.relationship('User')
 
     def __init__(self, **kwargs):
         super(Item, self).__init__(**kwargs)

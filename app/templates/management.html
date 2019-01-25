@@ -1,5 +1,6 @@
 <!-- list items by the user -->
 {% extends 'items_base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
 
 {% block title %}My Items{% endblock %}
 
@@ -7,4 +8,14 @@
     <div class="row" style="width: 100%;">
         <h1>Mangement</h1>
     </div>
+    {{ wtf.quick_form(form) }}
+    <ul class="items">
+        {% for item in items %}
+        <li class="item">
+            <div class="profile-thumbnail">
+                {{ item.item_title}}
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
 {% endblock %}

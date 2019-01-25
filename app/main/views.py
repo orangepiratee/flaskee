@@ -28,7 +28,7 @@ def overview():
 def analysis():
     return render_template('analysis.html')
 
-@main.route('/management')
+@main.route('/management', methods=['GET','POST'])
 @login_required
 def management():
     form = ItemForm()
@@ -36,8 +36,12 @@ def management():
         item = Item(item_title=form.title.data,
                     item_content=form.content.data,
                     item_datetime=datetime.utcnow(),
-                    item_author=current_user._get_current_object())
-    return render_template('management.html')
+                    item_author=current_user._get_current_object().user_id)
+        db.session.add(item)
+        db.session.commit()
+        return redirect(url_for('.index'))
+    items = Item.query.order_by(Item.item_datetime.desc()).all()
+    return render_template('management.html', form=form, items=items)
 
 @main.route('/signin')
 def signin():
