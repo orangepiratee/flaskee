@@ -9,13 +9,21 @@
         <h1>Mangement</h1>
     </div>
     {{ wtf.quick_form(form) }}
-    <ul class="items">
+    <ul class="item">
         {% for item in items %}
-        <li class="item">
-            <div class="profile-thumbnail">
-                {{ item.item_title}}
+        <li class="container">
+            <div>
+                {{ moment(item.item_datetime).fromNow() }}
+            </div>
+            <div>
+                <a href="">{{ item.item_title}}</a>
             </div>
         </li>
         {% endfor %}
     </ul>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+{{ moment.include_moment() }}
 {% endblock %}

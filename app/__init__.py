@@ -12,7 +12,7 @@ bootstrap = Bootstrap()
 moment = Moment()
 db = SQLAlchemy()
 login_manager = LoginManager()
-login_manager.login_view = '/signin'
+login_manager.login_view = 'auth.signin'
 
 def create_app(config_name):
     app = Flask(__name__)
@@ -31,6 +31,9 @@ def create_app(config_name):
 
     from .auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint, url_prefix='/auth')
+
+    from .item import item as item_blueprint
+    app.register_blueprint(item_blueprint, url_prefix='/item')
 
     return app
 

@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-
 from flask import render_template, redirect, request, url_for, flash
 from flask_login import login_user, login_required, logout_user
 from . import auth
@@ -16,11 +15,11 @@ def signin():
         if user is not None and user.verify_password(form.password.data):
             login_user(user, form.remember.data)
             next = request.args.get('next')
-            if next is None or not next.startswith('/'):
+            if next is None or not next.startswith('/') or next not in ['overview','management','analysis', 'usermanage','test']:
                 next = url_for('main.index')
             return redirect(next)
         flash('Invalid username or password!')
-    return render_template('signin.html', form=form)
+    return render_template('/auth/signin.html', form=form)
 
 @auth.route('/signup', methods=['GET','POST'])
 def signup():
@@ -32,7 +31,7 @@ def signup():
         db.session.add(user)
         db.session.commit()
         return redirect(url_for('auth.signin'))
-    return render_template('signup.html', form=form)
+    return render_template('/auth/signup.html', form=form)
 
 @auth.route('/signout', methods=['GET','POST'])
 @login_required

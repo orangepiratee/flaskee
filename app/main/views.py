@@ -7,8 +7,11 @@ from .forms import *
 from .. import db
 from ..models import *
 from flask_login import login_required, current_user
+from ..static.demo1 import *
 
-
+@main.route('/test')
+def test():
+    return render_template('test.html')
 
 @main.route('/', methods=['GET','POST'])
 def index():
@@ -44,14 +47,3 @@ def management():
     items = Item.query.order_by(Item.item_datetime.desc()).all()
     return render_template('management.html', form=form, items=items)
 
-@main.route('/signin')
-def signin():
-    return redirect('auth/signin')
-
-@main.route('/signup')
-def signup():
-    return redirect('auth/signup')
-
-@main.route('/signout')
-def signout():
-    return redirect('auth/signout')
