@@ -23,6 +23,7 @@
 
             </ul>
            <ul class="nav navbar-nav navbar-right">
+               <li><a>Hello, {% if current_user.is_authenticated %}{{ current_user.user_name }}{% else %}Stranger{% endif %}</a></li>
                {% if current_user.is_authenticated %}
                <li><a href="{{ url_for('auth.signout') }}">SignOut</a></li>
                {% else %}
@@ -37,6 +38,7 @@
 {% endblock %}
 
 {% block content %}
+
 <div class="container">
     {% for message in get_flashed_messages() %}
     <div class="alert alert-warning">

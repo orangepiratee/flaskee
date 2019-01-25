@@ -3,10 +3,10 @@
 from datetime import datetime
 from flask import render_template, session, redirect, url_for
 from . import main
-from .forms import NameForm
+from .forms import *
 from .. import db
-from ..models import User
-from flask_login import login_required
+from ..models import *
+from flask_login import login_required, current_user
 
 
 
@@ -31,6 +31,12 @@ def analysis():
 @main.route('/management')
 @login_required
 def management():
+    form = ItemForm()
+    if form.validate_on_submit():
+        item = Item(item_title=form.title.data,
+                    item_content=form.content.data,
+                    item_datetime=datetime.utcnow(),
+                    item_author=current_user._get_current_object())
     return render_template('management.html')
 
 @main.route('/signin')
