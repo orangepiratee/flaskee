@@ -28,8 +28,6 @@ def signup():
     if form.validate_on_submit():
         user = User(user_name=form.username.data,
                     password=form.password.data,
-                    user_department=0,
-                    user_role=0,
                     user_regtime=datetime.utcnow())
         db.session.add(user)
         db.session.commit()
