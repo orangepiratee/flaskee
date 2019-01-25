@@ -21,7 +21,8 @@ def index():
 
 @main.route('/overview')
 def overview():
-    return render_template('overview.html')
+    items = Item.query.order_by(Item.item_datetime.desc()).all()
+    return render_template('overview.html', items=items)
 
 @main.route('/analysis')
 @login_required

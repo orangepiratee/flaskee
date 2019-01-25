@@ -6,4 +6,13 @@
 {% block right_page_content %}
 <h1>Hi!</h1>
 <p>Overview</p>
+    <ul class="items">
+        {% for item in items %}
+        <li class="item">
+            <div class="profile-thumbnail">
+                {{ item.item_title}}
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
 {% endblock %}
