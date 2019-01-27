@@ -7,7 +7,6 @@ from .forms import *
 from .. import db
 from ..models import *
 from flask_login import login_required, current_user
-from ..static.demo1 import *
 
 @main.route('/test')
 def test():
