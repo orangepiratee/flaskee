@@ -8,6 +8,8 @@ from sqlalchemy.dialects.mysql import INTEGER, TINYINT
 from sqlalchemy.ext.declarative import declarative_base
 from . import login_manager
 
+from datetime import  datetime
+
 Base = declarative_base()
 metadata = Base.metadata
 
@@ -70,6 +72,11 @@ class User(UserMixin, db.Model):
             self.user_role = 1
         if self.user_department is None:
             self.user_department = 0
+
+    def ping(self):
+        self.user_lastlogtime = datetime.utcnow()
+        db.session.add(self)
+        db.session.commit()
 
     def __repr__(self):
         return '<User %r>' % self.user_name

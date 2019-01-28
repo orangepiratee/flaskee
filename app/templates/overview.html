@@ -10,7 +10,7 @@
         {% for item in items %}
         <li class="item">
             <div class="profile-thumbnail">
-                {{ item.item_title}}
+                <a href="/item/{{ item.item_id }}">{{ item.item_title}}</a>
             </div>
         </li>
         {% endfor %}

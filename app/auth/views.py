@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 from flask import render_template, redirect, request, url_for, flash
-from flask_login import login_user, login_required, logout_user
+from flask_login import login_user, login_required, logout_user, current_user
 from . import auth
 from ..models import *
 from .forms import *
 from app import db
 from datetime import datetime
+
 
 @auth.route('/signin', methods=['GET','POST'])
 def signin():

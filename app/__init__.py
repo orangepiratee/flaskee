@@ -8,6 +8,7 @@ from config import config
 from flask_login import LoginManager
 
 
+
 bootstrap = Bootstrap()
 moment = Moment()
 db = SQLAlchemy()
@@ -31,9 +32,6 @@ def create_app(config_name):
 
     from .auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint, url_prefix='/auth')
-
-    from .item import item as item_blueprint
-    app.register_blueprint(item_blueprint, url_prefix='/item')
 
     return app
 

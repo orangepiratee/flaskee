@@ -10,13 +10,13 @@
     </div>
     <div class="container">
     <ul class="item">
-        {% for item in items %}
+        {% for user in users %}
         <li class="container">
             <div>
-                {{ moment(item.item_datetime).fromNow() }}
+                {{ moment(user.user_lastlogtime).fromNow() }}
             </div>
             <div>
-                <a href="/item/{{ item.item_id }}">{{ item.item_title}}</a>
+                <a href="">{{ user.user_name }}</a>
             </div>
         </li>
         {% endfor %}
