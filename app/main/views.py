@@ -8,8 +8,6 @@ from app import db
 from ..models import *
 from flask_login import login_required, current_user
 
-from ..static.demo1 import *
-
 @main.route('/test')
 def test():
     #return main.send_static_file('theme181/index.html')
