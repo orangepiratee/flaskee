@@ -10,4 +10,19 @@
     {{ wtf.quick_form(form) }}
     <div class="container">
     </div>
+
+    <form method="post"  enctype="multipart/form-data">
+        <input type="text" name="subject" placeholder="主题">
+        <textarea name="content" id="content" placeholder="内容"></textarea>
+        <input type="submit" value="立即发布">
+
+
+        <script type="text/javascript">
+            CKEDITOR.replace('content', {
+
+                filebrowserUploadUrl: '/ckupload/',
+            });
+        </script>
+    </form>
+
 {% endblock %}
