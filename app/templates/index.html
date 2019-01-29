@@ -1,12 +1,43 @@
+<!-- list all the items -->
 {% extends 'webbase.html' %}
-{% import 'bootstrap/wtf.html'as wtf %}
 
-{% block title %}HomePage{% endblock %}
+{% block title %}All Items{% endblock %}
 
 {% block page_content %}
-<h1>Hi!</h1>
-<p>Overview</p>
-    {{ wtf.quick_form(form) }}
+
+    <ul class="items">
+        {% for item in items %}
+            {% if item.item_accept == 1 %}
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong class="card-title">{{ item.item_title }}
+                                <span class="badge ">[ {{ item.item_datetime}}]</span>
+                                <span class="badge badge-success float-right mt-1">Accept</span>
+                            </strong>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">{{ item.item_content }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong class="card-title">{{ item.item_title }}
+                                <span class="badge ">[ {{ item.item_datetime}}]</span>
+                                <span class="badge badge-danger float-right mt-1">Waiting</span>
+
+                            </strong>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">{{ item.item_content }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </ul>
+
 {% endblock %}
-
-

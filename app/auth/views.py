@@ -40,3 +40,9 @@ def signout():
     logout_user()
     flash('You have been Signed out!')
     return redirect(url_for('main.index'))
+
+@auth.route('/users', methods=['GET','POST'])
+@login_required
+def users():
+    users = User.query.order_by(User.user_name.desc()).all()
+    return render_template('/auth/userlist.html',users=users)

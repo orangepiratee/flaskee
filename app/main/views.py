@@ -8,21 +8,16 @@ from app import db
 from ..models import *
 from flask_login import login_required, current_user
 
-@main.route('/test')
-def test():
-    #return main.send_static_file('theme181/index.html')
-    return render_template('webbase.html')
 
-@main.route('/', methods=['GET','POST'])
+@main.route('/test', methods=['GET','POST'])
 def index():
     form = NameForm()
     if form.validate_on_submit():
         #return redirect(url_for('.index'))
         db.create_all()
-    return render_template('index.html',form=form,username=session.get('username'),
-                           known=session.get('known',False),current_time=datetime.utcnow())
+    return render_template('test.html',form=form, current_time=datetime.utcnow())
 
-@main.route('/overview')
+@main.route('/')
 def overview():
     items = Item.query.order_by(Item.item_datetime.desc()).all()
     users = User.query.order_by(User.user_name.desc()).all()
@@ -33,7 +28,7 @@ def overview():
         temp['user_id']=user.user_id
         tempusers.append(temp)
     session['users'] = users'''
-    return render_template('overview.html', items=items,users=users)
+    return render_template('index.html', items=items,users=users)
 
 @main.route('/analysis')
 @login_required

@@ -5,23 +5,42 @@
 {% block title %}My Items{% endblock %}
 
 {% block page_content %}
-    <div class="row" style="width: 100%;">
-        <h1>My Items Mangement</h1>
-    </div>
-    <div class="container">
-    <ul class="item">
+
+    <ul class="items">
         {% for item in items %}
-        <li class="container">
-            <div>
-                {{ moment(item.item_datetime).fromNow() }}
-            </div>
-            <div>
-                <a href="/item/{{ item.item_id }}">{{ item.item_title}}</a>
-            </div>
-        </li>
+            {% if item.item_accept == 1 %}
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong class="card-title">{{ item.item_title }}
+                                <span class="badge ">[ {{ item.item_datetime}}]</span>
+                                <span class="badge badge-success float-right mt-1">Accept</span>
+                            </strong>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">{{ item.item_content }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong class="card-title">{{ item.item_title }}
+                                <span class="badge ">[ {{ item.item_datetime}}]</span>
+                                <span class="badge badge-danger float-right mt-1">Waiting</span>
+
+                            </strong>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">{{ item.item_content }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
         {% endfor %}
     </ul>
-    </div>
+
 {% endblock %}
 
 {% block scripts %}

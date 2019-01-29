@@ -64,9 +64,10 @@
             <div id="main-menu" class="main-menu collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="/overview"><i class="menu-icon fa fa-laptop"></i>Home</a>
+                        <a href="/"><i class="menu-icon fa fa-laptop"></i>Home</a>
                     </li>
                     {% if current_user.is_authenticated %}
+                        <!-- common user -->
                         {% if current_user.user_role >= 1 %}
                         <li class="menu-title">User View</li><!-- /.menu-title -->
                         <li>
@@ -79,6 +80,7 @@
                             <a href="/item/write"><i class="menu-icon fa fa-laptop"></i>Write</a>
                         </li>
                         {% endif %}
+                        <!-- manager -->
                         {% if current_user.user_role >= 2 %}
                         <li class="menu-title">Manager View</li><!-- /.menu-title -->
                         <li>
@@ -112,16 +114,17 @@
                             </ul>
                         </li>
                         {% endif %}
+                        <!-- super admin -->
                         {% if current_user.user_role >= 3 %}
                         <li class="menu-title">Super View</li><!-- /.menu-title -->
                         <li>
-                            <a href="/"><i class="menu-icon fa fa-laptop"></i>Test</a>
+                            <a href="/test"><i class="menu-icon fa fa-laptop"></i>Test</a>
                         </li>
                         <li>
                             <a href="#"><i class="menu-icon fa fa-laptop"></i>Items Management</a>
                         </li>
                         <li>
-                            <a href="#"><i class="menu-icon fa fa-laptop"></i>Users Management</a>
+                            <a href="{{ url_for('auth.users') }}"><i class="menu-icon fa fa-laptop"></i>Users Management</a>
                         </li>
                             </ul>
                         </li>
@@ -213,7 +216,6 @@
         <div class="content">
             <!-- Animated -->
             <div class="animated fadeIn">
-                {% block content %}
                 <div class="container" style="height: auto">
                     {% for message in get_flashed_messages() %}
                     <div class="alert alert-warning">
@@ -221,10 +223,8 @@
                         {{ message }}
                     </div>
                     {% endfor %}
-
                     {% block page_content %}{% endblock %}
                 </div>
-                {% endblock %}
             </div>
         </div>
     </div>
@@ -237,3 +237,4 @@
 
 </body>
 </html>
+
