@@ -1,10 +1,9 @@
-{% extends 'items_base.html' %}
+{% extends 'webbase.html' %}
 
 {% block title %}Item - Read{% endblock %}
 
-{% block right_page_content %}
+{% block page_content %}
 <div class="container">
-    <h3>Item Read</h3>
     <h3>{{ item.item_title }}</h3>
     <p>{{ item.item_content }}</p>
 </div>

@@ -1,11 +1,12 @@
 <!-- list all the items -->
-{% extends 'items_base.html' %}
+{% extends 'webbase.html' %}
 
 {% block title %}All Items{% endblock %}
 
-{% block right_page_content %}
-<h1>Hi!</h1>
-<p>Overview</p>
+{% block page_content %}
+    <div class="row" style="width: 100%;">
+        <h1>Overview All Items</h1>
+    </div>
     <ul class="items">
         {% for item in items %}
         <li class="item">

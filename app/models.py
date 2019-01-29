@@ -15,11 +15,16 @@ metadata = Base.metadata
 
 
 class Permission:
+    #write a new item
     WRITE = 1
+    #modify the item
     MODIFY = 2
-    ADMIN = 4
-    SUPER = 8
-#users: 0->superadmin, 1->user, 2->admin
+    #accept or reject the item
+    MANAGE = 4
+    #super privilege
+    ADMIN = 8
+
+#users: 0->superadmin, 1->user, 2->manager
 class Role(Base):
     __tablename__ = 't_role'
 
@@ -33,9 +38,21 @@ class Role(Base):
         if self.role_permission is None:
             self.role_permission = 0
 
+    def add_permission(self, perm):
+        self.role_permission += perm
+
+    def remove_permission(self, perm):
+        self.role_permission -= perm
+
+    def reset_permission(self):
+        self.role_permission = 1
+
+    def has_permission(self, perm):
+        return self.role_permission & perm ==perm
+
 
 # rewrite the User Item extends to model( which is autogenerate from  mysql through sqlacodegen)
-# users: 0->superadmin, 1->user, 2->admin
+# users: 0->superadmin, 1->user, 2->manager
 class User(UserMixin, db.Model):
     __tablename__ = 't_user'
     user_id = Column(INTEGER(11), primary_key=True)

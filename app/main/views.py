@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from datetime import datetime
-from flask import render_template, session, redirect, url_for
+from flask import render_template, session, redirect, url_for, jsonify
 from . import main
 from .forms import *
 from app import db
@@ -25,27 +25,26 @@ def index():
 @main.route('/overview')
 def overview():
     items = Item.query.order_by(Item.item_datetime.desc()).all()
-    return render_template('overview.html', items=items)
+    users = User.query.order_by(User.user_name.desc()).all()
+    '''tempusers = []
+    for user in users:
+        temp = {}
+        temp['user_name']=user.user_name
+        temp['user_id']=user.user_id
+        tempusers.append(temp)
+    session['users'] = users'''
+    return render_template('overview.html', items=items,users=users)
 
 @main.route('/analysis')
 @login_required
 def analysis():
     return render_template('analysis.html')
 
-@main.route('/management', methods=['GET','POST'])
+@main.route('/manage', methods=['GET','POST'])
 @login_required
 def management():
-    '''form = ItemForm()
-    if form.validate_on_submit():
-        item = Item(item_title=form.title.data,
-                    item_content=form.content.data,
-                    item_datetime=datetime.utcnow(),
-                    item_author=current_user._get_current_object().user_id)
-        db.session.add(item)
-        db.session.commit()
-        return redirect(url_for('.index'))'''
     items = Item.query.order_by(Item.item_datetime.desc()).filter_by(item_author=current_user._get_current_object().user_id)
-    return render_template('management.html', items=items)
+    return render_template('manage.html', items=items)
 
 
 @main.route('/item/<id>')
