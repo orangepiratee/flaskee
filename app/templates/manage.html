@@ -6,40 +6,51 @@
 
 {% block page_content %}
 
-    <ul class="items">
         {% for item in items %}
             {% if item.item_accept == 1 %}
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <strong class="card-title">{{ item.item_title }}
-                                <span class="badge ">[ {{ item.item_datetime}}]</span>
-                                <span class="badge badge-success float-right mt-1">Accept</span>
-                            </strong>
-                        </div>
-                        <div class="card-body">
-                            <p class="card-text">{{ item.item_content }}</p>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <strong class="card-title">
+                                    <a href="/item/{{ item.item_id }}" style="color: black">{{ item.item_title }}</a>
+                                    <span class="badge ">[ {{ item.item_datetime}}]</span>
+                                    <span class="badge badge-success float-left mt-1">Accept</span>
+                                    <button type="button" class="btn btn-sm btn-success float-right">Modify</button>
+                                    <button type="button" class="btn btn-sm btn-danger float-right ">Delete </button>
+                                </strong>
+                            </div>
+                            <a href="/item/{{ item.item_id }}">
+                                <div class="card-body">
+                                    <p class="card-text">{{ item.item_content }}</p>
+                                </div>
+                            </a>
                         </div>
                     </div>
                 </div>
             {% else %}
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <strong class="card-title">{{ item.item_title }}
-                                <span class="badge ">[ {{ item.item_datetime}}]</span>
-                                <span class="badge badge-danger float-right mt-1">Waiting</span>
-
-                            </strong>
-                        </div>
-                        <div class="card-body">
-                            <p class="card-text">{{ item.item_content }}</p>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <strong class="card-title">
+                                    <a href="/item/{{ item.item_id }}" style="color: black">{{ item.item_title }}</a>
+                                    <span class="badge ">[ {{ item.item_datetime}}]</span>
+                                    <span class="badge badge-danger float-left mt-1">Waiting</span>
+                                    <button type="button" class="btn btn-sm btn-success float-right">Modify</button>
+                                    <button type="button" class="btn btn-sm btn-danger float-right ">Delete </button>
+                                </strong>
+                            </div>
+                            <a href="/item/{{ item.item_id }}" style="color: black">
+                                <div class="card-body">
+                                    <p class="card-text">{{ item.item_content }}</p>
+                                </div>
+                            </a>
                         </div>
                     </div>
                 </div>
             {% endif %}
         {% endfor %}
-    </ul>
 
 {% endblock %}
 

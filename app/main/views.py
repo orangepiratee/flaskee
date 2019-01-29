@@ -10,7 +10,7 @@ from flask_login import login_required, current_user
 
 
 @main.route('/test', methods=['GET','POST'])
-def index():
+def overview():
     form = NameForm()
     if form.validate_on_submit():
         #return redirect(url_for('.index'))
@@ -18,9 +18,8 @@ def index():
     return render_template('test.html',form=form, current_time=datetime.utcnow())
 
 @main.route('/')
-def overview():
+def index():
     items = Item.query.order_by(Item.item_datetime.desc()).all()
-    users = User.query.order_by(User.user_name.desc()).all()
     '''tempusers = []
     for user in users:
         temp = {}
@@ -28,7 +27,7 @@ def overview():
         temp['user_id']=user.user_id
         tempusers.append(temp)
     session['users'] = users'''
-    return render_template('index.html', items=items,users=users)
+    return render_template('index.html', items=items)
 
 @main.route('/analysis')
 @login_required
