@@ -68,14 +68,12 @@
                     </li>
                     {% if current_user.is_authenticated %}
                         <!-- common user -->
-                        {% if current_user.user_role >= 1 %}
+                        <!--{% if current_user.user_role >= 1 %} -->
                         <li class="menu-title">User View</li><!-- /.menu-title -->
                         <li>
                             <a href="/manage"><i class="menu-icon fa fa-laptop"></i>Manage</a>
                         </li>
-                        <li>
-                            <a href="#"><i class="menu-icon fa fa-laptop"></i>Analysis</a>
-                        </li>
+
                         <li>
                             <a href="/item/write"><i class="menu-icon fa fa-laptop"></i>Write</a>
                         </li>
@@ -86,9 +84,7 @@
                         <li>
                             <a href="/manage"><i class="menu-icon fa fa-laptop"></i>Manage</a>
                         </li>
-                        <li>
-                            <a href="#" hidden="hidden"><i class="menu-icon fa fa-laptop"></i>Analysis</a>
-                        </li>
+
                         <li class="menu-item-has-children dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="menu-icon fa fa-cogs"></i>User</a>
@@ -207,17 +203,13 @@
         <!-- Content -->
         <div class="content">
             <!-- Animated -->
-            <div class="animated fadeIn">
-                <div class="container" style="height: auto">
-                    {% for message in get_flashed_messages() %}
-                    <div class="alert alert-warning">
-                        <button type="button" class="close" data-dismiss="alert">&times;</button>
-                        {{ message }}
-                    </div>
-                    {% endfor %}
-                    {% block page_content %}{% endblock %}
-                </div>
+            {% for message in get_flashed_messages() %}
+            <div class="alert alert-warning">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                {{ message }}
             </div>
+            {% endfor %}
+            {% block page_content %}{% endblock %}
         </div>
     </div>
     <!-- Scripts -->
@@ -226,7 +218,7 @@
     <script src="../static/theme181/assets/js/bootstrap.min.js"></script>
     <script src="../static/theme181/assets/js/jquery.matchHeight.min.js"></script>
     <script src="../static/theme181/assets/js/main.js"></script>
-    <script src="../static/ckeditor_4.11.2_full/ckeditor/ckeditor.js"></script>
+    <script src="../static/ckeditor_4.11.2_standard/ckeditor/ckeditor.js"></script>
 
 </body>
 </html>

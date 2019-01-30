@@ -4,6 +4,7 @@ from flask import Flask
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
 from flask_sqlalchemy import SQLAlchemy
+from flask_ckeditor import CKEditor
 from config import config
 from flask_login import LoginManager
 
@@ -12,6 +13,7 @@ from flask_login import LoginManager
 bootstrap = Bootstrap()
 moment = Moment()
 db = SQLAlchemy()
+ckeditor = CKEditor()
 login_manager = LoginManager()
 login_manager.login_view = 'auth.signin'
 
@@ -24,6 +26,7 @@ def create_app(config_name):
     moment.init_app(app)
     db.init_app(app)
     login_manager.init_app(app)
+    ckeditor.init_app(app)
 
 
     #register blueprint

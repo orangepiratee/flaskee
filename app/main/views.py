@@ -60,11 +60,12 @@ def write():
     if form.validate_on_submit():
         item = Item(item_title=form.title.data,
                     item_content=form.content.data,
+                    item_class=form.classification.data,
                     item_datetime=datetime.utcnow(),
                     item_author=current_user._get_current_object().user_id)
         db.session.add(item)
         db.session.commit()
-        return redirect(url_for('.management'))
+        return redirect(url_for('index'))
     return render_template('/item/item_write.html', form=form)
 
 @main.route('/users')

@@ -5,37 +5,44 @@
 
 {% block page_content %}
 
-        {% for item in items %}
-            {% if item.item_accept == 1 %}
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <strong class="card-title">{{ item.item_title }}
-                                <span class="badge ">[ {{ item.item_datetime}}]</span>
-                                <span class="badge badge-success float-left mt-1">Accept</span>
-                            </strong>
-                        </div>
-                        <div class="card-body">
-                            <p class="card-text">{{ item.item_content }}</p>
-                        </div>
-                    </div>
-                </div>
-            {% else %}
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <strong class="card-title">{{ item.item_title }}
-                                <span class="badge ">[ {{ item.item_datetime}}]</span>
-                                <span class="badge badge-danger float-left mt-1">Waiting</span>
+    <div class="col-lg-12">
+        <div class="card" >
+            <div class="card-header">
+                <strong class="card-title">All items</strong>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead style="font-size: small">
+                        <tr>
+                            <th scope="col" style="width: 15%;">Date</th>
+                            <th scope="col" style="width: 3%;" alt="accept">V</th>
+                            <th scope="col" style="width: 3%;">A</th>
+                            <th scope="col" style="width: 65%;">Title</th>
+                            <th scope="col" style="width: 5%;">Class</th>
+                            <th scope="col" style="width: 5%;">Author</th>
 
-                            </strong>
-                        </div>
-                        <div class="card-body">
-                            <p class="card-text">{{ item.item_content }}</p>
-                        </div>
-                    </div>
-                </div>
-            {% endif %}
-        {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody style="font-size: small;color: black;">
+                        {% for item in items %}
+                        <tr>
+                            <td class="badge">{{ item.item_datetime }}</td>
+                            <td>{{ item.item_accept }}</td>
+                            <td style="color: black">{% if item.item_attachment %}
+                                <a href="{{ item.item_attachment }}"><i class="fa fa-download"></i></a>
+                                {% else %}
+                                <a href="#">-</a>
+                                {% endif %}
+                            </td>
+                            <td><a href="/item/{{ item.item_id }}" style="color: black;">{{ item.item_title }}</a></td>
+                            <td><a href="#" style="color: black;">{{ item.item_class }}</a></td>
+                            <td><a href="/user/{{ item.item_author }}" style="color: black;">{{ item.item_author }}</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}
