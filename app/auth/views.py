@@ -47,4 +47,4 @@ def signout():
 @login_required
 def users():
     users = User.query.order_by(User.user_name.desc()).all()
-    return render_template('/auth/userlist.html',users=users)
+    return render_template('/user/userlist.html',users=users)
