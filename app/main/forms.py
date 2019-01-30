@@ -8,9 +8,3 @@ from wtforms.validators import DataRequired, Length
 class NameForm(FlaskForm):
     name = StringField('What is your name?', validators=[DataRequired()])
     submit = SubmitField('create table')
-
-class ItemForm(FlaskForm):
-    title = StringField('Title here', validators=[DataRequired(),Length(1,254)])
-    content = CKEditorField('Content here',validators=[DataRequired()])
-    classification = RadioField('Classification here', choices=((1,'A'),(2,'B')))
-    submit = SubmitField('Submit',render_kw={'class':'btn btn-small btn-success'})

@@ -9,6 +9,7 @@ from ..models import *
 from flask_login import login_required, current_user
 
 @item.route('/read/<int:id>')
+@login_required
 def read(id):
     item = Item.query.filter_by(item_id=id).first_or_404()
     return render_template('/item/item_read.html', item=item)
