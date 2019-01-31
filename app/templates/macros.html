@@ -4,11 +4,9 @@
 
     {% if type == 'css' %}
         <link rel="stylesheet" href="{{ filename_or_url }}" type="text/css">
-    {% else %}
-    {% if type == 'js' %}
+    {% elif type == 'js' %}
         <script type="text/javascript" src="{{ filename_or_url }}"></script>
-    {% else %}
-    {% if type == 'icon' %}
+    {% elif type == 'icon' %}
         <link rel="icon" href="{{ filename_or_url }}">
     {% endif %}
 {% endmacro %}

@@ -2,9 +2,17 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 
 {% block title %}Item - Write{% endblock %}
-
+{% block page_title %}Write{% endblock %}
 {% block page_content %}
- <div style="width: 100%;height: 100%">
-    {{ wtf.quick_form(form) }}
-</div>
+
+        <div class="has-success form-group">
+            <label for="inputIsValid" class=" form-control-label">Input is valid</label>
+            <input type="text" id="inputIsValid" class="is-valid form-control-success form-control">
+        </div>
+        <div>
+            <textarea name="editor1" id="editor1" class="ckeditor" rows="10" cols="80">
+                This is my textarea to be replaced with CKEditor.
+            </textarea>
+        </div>
+
 {% endblock %}

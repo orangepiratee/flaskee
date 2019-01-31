@@ -34,3 +34,8 @@ def write():
         db.session.commit()
         return redirect(url_for('index'))
     return render_template('/item/item_write.html', form=form)
+
+@item.route('/accept/<int:id>')
+@login_required
+def accept():
+    return

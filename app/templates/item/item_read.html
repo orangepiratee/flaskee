@@ -1,7 +1,7 @@
-{% extends './webbase.html' %}
+{% extends 'webbase.html' %}
 {% import 'bootstrap/wtf.html' as wtf %}
 
-{% block title %}Item - Read{% endblock %}
+{% block title %}Item Read{% endblock %}
 
 {% block page_content %}
 
@@ -12,9 +12,9 @@
                     <h4>{{ item.item_title }}</h4>
                     {% if current_user.user_role >=2 %}
                     <span><a href="/item/modify/{{ item.item_id }}" style="color: orange" class="float-right badge mt-1">modify</a></span>
-                    <span><a href="/item/accept/{{ item_item_id }}" style="color: green" class="float-right badge mt-1">accept</a></span>
-                    {% else %}
-                    <span><a href="/item/modify/{{ item.item_id}}" style="color: orange" class="float-right badge mt-1">modify</a> </span>
+                    <span><a href="/item/accept/{{ item.item_id }}" style="color: green" class="float-right badge mt-1">accept</a></span>
+                    {% elif current_user.user_id == item.item_author %}
+                    <span><a href="/item/modify/{{ item.item_id }}" style="color: orange" class="float-right badge mt-1">modify</a> </span>
                     {% endif %}
                     </div>
                 </div>
