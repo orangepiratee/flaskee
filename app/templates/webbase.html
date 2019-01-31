@@ -1,24 +1,25 @@
-
 <html lang="en">
+{% import 'macros.html' as macros %}
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %}</title>
     <meta name="description" content="Ela Admin - HTML5 Admin Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" href="../static/theme181/assets/css/normalize.css">
-    <link rel="stylesheet" href="../static/theme181/assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../static/theme181/assets/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../static/theme181/assets/css/themify-icons.css">
-    <link rel="stylesheet" href="../static/theme181/assets/css/pe-icon-7-filled.css">
-    <link rel="stylesheet" href="../static/theme181/assets/css/flag-icon.min.css">
-    <link rel="stylesheet" href="../static/theme181/assets/css/cs-skin-elastic.css">
-    <link rel="stylesheet" href="../static/theme181/assets/css/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='theme181/assets/css/normalize.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='theme181/assets/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='theme181/assets/css/font-awesome.min.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='theme181/assets/css/themify-icons.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='theme181/assets/css/pe-icon-7-filled.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='theme181/assets/css/flag-icon.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='theme181/assets/css/cs-skin-elastic.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='theme181/assets/css/style.css') }}">
     <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
-    <link href="../static/theme181/assets/weather/css/weather-icons.css" rel="stylesheet" />
-    <link href="../static/theme181/assets/calendar/fullcalendar.css" rel="stylesheet" />
-    <link href="../static/theme181/assets/css/charts/chartist.min.css" rel="stylesheet">
-    <link href="../static/theme181/assets/css/lib/vector-map/jqvmap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='theme181/assets/weather/css/weather-icons.css') }}" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='theme181/assets/calendar/fullcalendar.css') }}" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='theme181/assets/css/charts/chartist.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='theme181/assets/css/lib/vector-map/jqvmap.min.css') }}" rel="stylesheet">
 
     <style>
     #weatherWidget .currentDesc {
@@ -150,7 +151,7 @@
             <div class="top-right">
                 <div class="header-menu">
                     <div class="header-left">
-
+                        {% if current_user.is_authenticated %}
                         <div class="dropdown for-notification">
                             <button class="btn btn-secondary dropdown-toggle" type="button" id="notification" data-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false">
@@ -175,7 +176,7 @@
                             <div class="dropdown-menu" aria-labelledby="message">
                                 <p class="red">You have 4 Mails</p>
                                 <a class="dropdown-item media" href="#">
-                                    <span class="photo media-left"><img alt="avatar" src="../static/theme181/images/avatar/1.jpg"></span>
+                                    <span class="photo media-left"><img alt="avatar" src="{{ url_for('static', filename='theme181/images/avatar/1.jpg') }}"></span>
                                     <div class="message media-body">
                                         <span class="name float-left">Jonathan Smith</span>
                                         <span class="time float-right">Just now</span>
@@ -185,13 +186,13 @@
 
                             </div>
                         </div>
+                        {% endif %}
                     </div>
-
                     <div class="user-area dropdown float-right">
                         {% if current_user.is_authenticated %}
                         hello, <a href="#" style="font-size-adjust: inherit">{{ current_user.user_name }}</a> /
                         <span><a href="{{ url_for('auth.signout') }}">signout</a></span>
-                        {% else %}hello Guest, please
+                        {% else %}
                         <a href="{{ url_for('auth.signin') }}">SignIn</a> / <a href="{{ url_for('auth.signup') }}">SignUp</a>
                         </a>
                         {% endif %}
@@ -213,12 +214,12 @@
         </div>
     </div>
     <!-- Scripts -->
-    <script src="../static/theme181/assets/js/vendor/jquery-2.1.4.min.js"></script>
-    <script src="../static/theme181/assets/js/popper.min.js"></script>
-    <script src="../static/theme181/assets/js/bootstrap.min.js"></script>
-    <script src="../static/theme181/assets/js/jquery.matchHeight.min.js"></script>
-    <script src="../static/theme181/assets/js/main.js"></script>
-    <script src="../static/ckeditor_4.11.2_standard/ckeditor/ckeditor.js"></script>
+    <script src="{{ url_for('static', filename='theme181/assets/js/vendor/jquery-2.1.4.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='theme181/assets/js/popper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='theme181/assets/js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='theme181/assets/js/jquery.matchHeight.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='theme181/assets/js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='ckeditor_4.11.2_standard/ckeditor/ckeditor.js') }}"></script>
 
 </body>
 </html>

@@ -1,10 +1,10 @@
-{% extends 'webbase.html' %}
+{% extends './webbase.html' %}
 {% import 'bootstrap/wtf.html' as wtf %}
 
 {% block title %}Item - Read{% endblock %}
 
 {% block page_content %}
-    <div class="row">
+
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
@@ -31,12 +31,12 @@
                             <p>
                                 {{ item.item_content }}
                             </p>
-                         </div>
-
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+
 {% endblock %}
+
 

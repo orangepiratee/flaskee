@@ -8,7 +8,7 @@ from app import db
 from ..models import *
 from flask_login import login_required, current_user
 
-@item.route('/read/<int:id>')
+@item.route('/read/<int:id>', methods=['GET','POST'])
 @login_required
 def read(id):
     item = Item.query.filter_by(item_id=id).first_or_404()
