@@ -106,7 +106,7 @@ class Item(db.Model):
     item_id = Column(INTEGER(11), primary_key=True)
     item_title = Column(String(255), nullable=False)
     item_content = Column(Text, nullable=False)
-    item_class = Column(INTEGER(11), nullable=False)
+    item_category = Column(INTEGER(11), nullable=False)
     item_datetime = Column(DateTime)
     item_read = Column(TINYINT(4), nullable=False, server_default=text("'0'"))
     item_accept = Column(TINYINT(4), nullable=False, server_default=text("'0'"))
@@ -124,8 +124,8 @@ class Item(db.Model):
             self.item_accept = 0
         if self.item_delete is None:
             self.item_delete = 0
-        if self.item_class is None:
-            self.item_class = 0
+        if self.item_category is None:
+            self.item_category = 0
 
 @login_manager.user_loader
 def load_user(user_id):

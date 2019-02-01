@@ -13,7 +13,7 @@
                             <th scope="col" style="width: 3%;" alt="accept">V</th>
                             <th scope="col" style="width: 3%;">A</th>
                             <th scope="col" style="width: 65%;">Title</th>
-                            <th scope="col" style="width: 5%;">Class</th>
+                            <th scope="col" style="width: 5%;">Category</th>
                             <th scope="col" style="width: 5%;">Author</th>
                             <th scope="col" style="width: 3%">Manage</th>
 
@@ -37,7 +37,7 @@
                                 {% endif %}
                             </td>
                             <td><a href="{{ url_for('item.read',id=item.item_id)}}" style="color: black;">{{ item.item_title }}</a></td>
-                            <td><a href="#" style="color: black;">{{ item.item_class }}</a></td>
+                            <td><a href="#" style="color: black;">{{ item.item_category }}</a></td>
                             <td><a href="/user/{{item.item_author }}" style="color: black;">{{ item.item_author }}</a></td>
                             <td>
                             {% if not item.item_accept %}

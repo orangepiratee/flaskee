@@ -10,18 +10,18 @@
                                 <strong>New </strong> Item
                             </div>
                             <div class="card-body card-block">
-                                <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
+                                <form action="/item/add" method="post" enctype="multipart/form-data" class="form-horizontal">
                                     <div class="row form-group">
-                                        <div class="col-12 col-md-12"><input type="text" id="text-input" name="text-input" placeholder="Title..." class="form-control"></div>
+                                        <div class="col-12 col-md-12"><input type="text" id="text-input" name="input_title" placeholder="Title..." class="form-control"></div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col-12 col-md-12">
-                                                <textarea name="textarea-input" id="textarea-input" rows="21" placeholder="Content..." class="form-control"></textarea>
+                                                <textarea name="input_content" id="textarea-input" rows="21" placeholder="Content..." class="form-control"></textarea>
                                           </div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col-12 col-md-5">
-                                            <select name="select" id="select" class="form-control">
+                                            <select name="select_category" id="select" class="form-control">
                                                 <option value="0">Please select the category</option>
                                                 <option value="1">Option #1</option>
                                                 <option value="2">Option #2</option>

@@ -13,16 +13,16 @@
                             <div class="card-body card-block">
                                 <form action="/item/update/{{ item.item_id }}" method="post" enctype="multipart/form-data" class="form-horizontal">
                                     <div class="row form-group">
-                                        <div class="col-12 col-md-12"><input type="text" id="text-input" name="text-input" placeholder="Title..." class="form-control" value="{{ item.item_title }}"></div>
+                                        <div class="col-12 col-md-12"><input type="text" id="text-input" name="input_title" placeholder="Title..." class="form-control" value="{{ item.item_title }}"></div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col-12 col-md-12">
-                                                <textarea name="textarea-input" id="textarea-input" rows="20" placeholder="Content..." class="form-control">{{ item.item_content }}</textarea>
+                                                <textarea name="input_content" id="textarea-input" rows="20" placeholder="Content..." class="form-control">{{ item.item_content }}</textarea>
                                           </div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col-12 col-md-5 ">
-                                            <select name="select" id="select_category" class="form-control float-right" >
+                                            <select name="select_category" id="select_category" class="form-control float-right" >
                                                 <option value="0">Please select the category</option>
                                                 <option value="1">Option #1</option>
                                                 <option value="2">Option #2</option>

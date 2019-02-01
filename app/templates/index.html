@@ -14,7 +14,7 @@
                             <th scope="col" style="width: 3%;" alt="accept">V</th>
                             <th scope="col" style="width: 3%;">A</th>
                             <th scope="col" style="width: 65%;">Title</th>
-                            <th scope="col" style="width: 5%;">Class</th>
+                            <th scope="col" style="width: 5%;">Category</th>
                             <th scope="col" style="width: 5%;">Author</th>
 
                         </tr>
@@ -22,7 +22,7 @@
                     <tbody style="color: black;">
                         {% for item in items %}
                         <tr>
-                            <td class="badge">{{ item.item_datetime }}</td>
+                            <td style="color: black;font-size: small;">{{ item.item_datetime }}</td>
                             <td>
                                 {% if item.item_accept %}
                                 <i class="fa fa-check" style="color: green;"></i>
@@ -37,7 +37,7 @@
                                 {% endif %}
                             </td>
                             <td><a href="{{ url_for('item.read',id=item.item_id)}}" style="color: black;">{{ item.item_title }}</a></td>
-                            <td><a href="#" style="color: black;">{{ item.item_class }}</a></td>
+                            <td><a href="#" style="color: black;">{{ item.item_category }}</a></td>
                             <td><a href="/user/{{item.item_author }}" style="color: black;">{{ item.item_author }}</a></td>
                         </tr>
                         {% endfor %}

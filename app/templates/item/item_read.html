@@ -10,18 +10,12 @@
                 <div class="card-header">
                     <div class="row">
                     <h4>{{ item.item_title }}</h4>
-                    {% if current_user.user_role >=2 and not item.item_accept %}
-                    <span><a href="/item/modify/{{ item.item_id }}" style="color: orange" class="float-right badge mt-1">modify</a></span>
-                    <span><a href="/item/accept/{{ item.item_id }}" style="color: green" class="float-right badge mt-1">accept</a></span>
-                    {% elif current_user.user_id == item.item_author and not item.item_accept %}
-                    <span><a href="/item/modify/{{ item.item_id }}" style="color: orange" class="float-right badge mt-1">modify</a> </span>
-                    {% endif %}
                     </div>
                 </div>
                 <div class="card-body">
                     <p class="text-muted m-b-15">
                         <span>write time:<code>{{ item.item_datetime }}</code></span><br>
-                        <span>class:<code>{{ item.item_class }}</code></span><br>
+                        <span>Category:<code>{{ item.item_category }}</code></span><br>
                         <span>accept:<code>{{ item.item_accept }}</code></span><br>
                         <span>attachment:<code>{{ item.item_attachment }}</code></span>
                     </p>
@@ -32,6 +26,17 @@
                                 {{ item.item_content }}
                             </p>
                         </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+
+                    <div class="row">
+                    {% if current_user.user_role >=2 and not item.item_accept %}
+                    <span><a href="/item/modify/{{ item.item_id }}" style="color: orange; font-size: small;" class="float-right badge mt-1">modify</a></span>
+                    <span><a href="/item/accept/{{ item.item_id }}" style="color: green; font-size: small;" class="float-right badge mt-1">accept</a></span>
+                    {% elif current_user.user_id == item.item_author and not item.item_accept %}
+                    <span><a href="/item/modify/{{ item.item_id }}" style="color: orange" class="float-right badge mt-1">modify</a> </span>
+                    {% endif %}
                     </div>
                 </div>
             </div>
