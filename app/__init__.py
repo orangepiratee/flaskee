@@ -7,6 +7,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_ckeditor import CKEditor
 from config import config
 from flask_login import LoginManager
+import os
 
 
 
@@ -16,6 +17,8 @@ db = SQLAlchemy()
 ckeditor = CKEditor()
 login_manager = LoginManager()
 login_manager.login_view = 'auth.signin'
+
+base_dir = os.path.dirname(__file__)
 
 def create_app(config_name):
     app = Flask(__name__)

@@ -40,7 +40,7 @@
                             <td><a href="#" style="color: black;">{{ item.item_category }}</a></td>
                             <td><a href="/user/{{item.item_author }}" style="color: black;">{{ item.item_author }}</a></td>
                             <td>
-                            {% if not item.item_accept %}
+                            {% if not item.item_accept or current_user.user_role >=2 %}
                             <a href="/item/modify/{{ item.item_id }}"  style="color: green;">
                                 <i class="fa fa-pencil"></i>
                             </a>

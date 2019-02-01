@@ -5,50 +5,56 @@
 
 {% block page_content %}
 
-        <div class="col-lg-10">
-                        <div class="card">
-                            <div class="card-header">
-                                <strong>Modify</strong> Item
-                            </div>
-                            <div class="card-body card-block">
-                                <form action="/item/update/{{ item.item_id }}" method="post" enctype="multipart/form-data" class="form-horizontal">
-                                    <div class="row form-group">
-                                        <div class="col-12 col-md-12"><input type="text" id="text-input" name="input_title" placeholder="Title..." class="form-control" value="{{ item.item_title }}"></div>
-                                    </div>
-                                    <div class="row form-group">
-                                        <div class="col-12 col-md-12">
-                                                <textarea name="input_content" id="textarea-input" rows="20" placeholder="Content..." class="form-control">{{ item.item_content }}</textarea>
-                                          </div>
-                                    </div>
-                                    <div class="row form-group">
-                                        <div class="col-12 col-md-5 ">
-                                            <select name="select_category" id="select_category" class="form-control float-right" >
-                                                <option value="0">Please select the category</option>
-                                                <option value="1">Option #1</option>
-                                                <option value="2">Option #2</option>
-                                                <option value="3">Option #3</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="row form-group ">
-                                        <div class="col col-md-12">
-                                            <input type="file" id="file-input" name="file-input" class="form-control-file">
-                                            <label for="file-input" class=" form-control-label" style="color: red;">(if you want to <strong>change</strong> the attachement, then choose a new one)</label>
-                                        </div>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary btn-sm">
-                                    <i class="fa fa-dot-circle-o"></i> Submit
-                                </button>
-                                <button type="reset" class="btn btn-danger btn-sm">
-                                    <i class="fa fa-ban"></i> Reset
-                                </button>
-                                </form>
-                            </div>
-
-                        </div>
-
+    <div class="col-lg-10">
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-lg-11">
+                        <strong>Modify</strong> Item
+                    </div>
+                    <div class="col-lg-1">
+                        <a href="/item/read/{{ item.item_id }}"><i class="fa fa-times float-right" style="color: red;"></i></a>
                     </div>
                 </div>
+            </div>
+            <div class="card-body card-block">
+                <form action="/item/update/{{ item.item_id }}" method="post" enctype="multipart/form-data" class="form-horizontal">
+                    <div class="row form-group">
+                        <div class="col-12 col-md-12"><input type="text" id="text-input" name="input_title" placeholder="Title..." class="form-control" value="{{ item.item_title }}"></div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-12 col-md-12">
+                                <textarea name="input_content" id="textarea-input" rows="20" placeholder="Content..." class="form-control">{{ item.item_content }}</textarea>
+                          </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-12 col-md-5 ">
+                            <select name="select_category" id="select_category" class="form-control float-right" >
+                                <option value="0">Please select the category</option>
+                                <option value="1">Option #1</option>
+                                <option value="2">Option #2</option>
+                                <option value="3">Option #3</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row form-group ">
+                        <div class="col col-md-12">
+                            <input type="file" id="file-input" name="file-input" class="form-control-file">
+                            <label for="file-input" class=" form-control-label" style="color: red;">(if you want to <strong>change</strong> the attachement, then choose a new one)</label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-sm">
+                        <i class="fa fa-dot-circle-o"></i> Submit
+                    </button>
+                    <button type="reset" class="btn btn-danger btn-sm">
+                        <i class="fa fa-ban"></i> Reset
+                    </button>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
 
 
 {% endblock %}
