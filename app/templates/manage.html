@@ -6,31 +6,60 @@
 {% block page_title %}Manage{% endblock %}
 {% block page_content %}
 
-        {% for item in items %}
-            <div class="col-md-10">
-                <div class="card">
-                    <div class="card-header">
-                        <strong class="card-title">
-                            <a href="/item/read/{{ item.item_id }}" style="color: black">{{ item.item_title }}</a>
-                            <span class="badge ">[ {{ item.item_datetime}}]</span>
-                            {% if item.item_accept == 1 %}
-                            <span class="badge badge-success float-left mt-1">Accept</span>
+        <table class="table table-striped">
+                    <thead >
+                        <tr>
+                            <th scope="col" style="width: 15%;">Date</th>
+                            <th scope="col" style="width: 3%;" alt="accept">V</th>
+                            <th scope="col" style="width: 3%;">A</th>
+                            <th scope="col" style="width: 65%;">Title</th>
+                            <th scope="col" style="width: 5%;">Class</th>
+                            <th scope="col" style="width: 5%;">Author</th>
+                            <th scope="col" style="width: 3%">Manage</th>
+
+                        </tr>
+                    </thead>
+                    <tbody style="color: black;">
+                        {% for item in items %}
+                        <tr>
+                            <td style="color: black;font-size: small;">{{ item.item_datetime }}</td>
+                            <td>
+                                {% if item.item_accept %}
+                                <i class="fa fa-check" style="color: green;"></i>
+                                {% else %}
+                                <i class="fa fa-times" style="color: red;"></i>
+                                {% endif %}
+                            </td>
+                            <td style="color: black">{% if item.item_attachment %}
+                                <a href="/item/download/{{ item.item_attachment }}"><i class="fa fa-download" style="color: dodgerblue;"></i></a>
+                                {% else %}
+                                <a >-</a>
+                                {% endif %}
+                            </td>
+                            <td><a href="{{ url_for('item.read',id=item.item_id)}}" style="color: black;">{{ item.item_title }}</a></td>
+                            <td><a href="#" style="color: black;">{{ item.item_class }}</a></td>
+                            <td><a href="/user/{{item.item_author }}" style="color: black;">{{ item.item_author }}</a></td>
+                            <td>
+                            {% if not item.item_accept %}
+                            <a href="/item/modify/{{ item.item_id }}"  style="color: green;">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+                            <a href="/item/delete/{{ item.item_id }}"  style="color: red;">
+                                <i class="fa fa-trash-o"></i>
+                            </a>
+
                             {% else %}
-                            <span class="badge badge-danger float-left mt-1">Waiting</span>
+                                <span>-</span>
                             {% endif %}
-                            <a href="/item/modify/{{ item.item_id }}" class="float-right" style="color: green;">Modify</a>
-                            <span class="float-right"> / </span>
-                            <a href="/item/delete/{{ item.item_id }}" class="float-right" style="color: red;">Delete</a>
-                        </strong>
-                    </div>
-                    <a href="/item/read/{{ item.item_id }}">
-                        <div class="card-body">
-                            <p class="card-text">{{ item.item_content }}</p>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        {% endfor %}
+                            </td>
+
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+
+
 
 {% endblock %}
 

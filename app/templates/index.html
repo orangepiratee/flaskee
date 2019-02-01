@@ -2,10 +2,10 @@
 {% extends 'webbase.html' %}
 
 {% block title %}All Items{% endblock %}
-{% block page_title %}Index{% endblock %}
+{% block page_title %}All Items{% endblock %}
 {% block page_content %}
 
-    <div class="col-lg-12">
+
 
                 <table class="table table-striped">
                     <thead >
@@ -23,11 +23,17 @@
                         {% for item in items %}
                         <tr>
                             <td class="badge">{{ item.item_datetime }}</td>
-                            <td>{{ item.item_accept }}</td>
-                            <td style="color: black">{% if item.item_attachment %}
-                                <a href="{{ item.item_attachment }}"><i class="fa fa-download"></i></a>
+                            <td>
+                                {% if item.item_accept %}
+                                <i class="fa fa-check" style="color: green;"></i>
                                 {% else %}
-                                <a href="#">-</a>
+                                <i class="fa fa-times" style="color: red;"></i>
+                                {% endif %}
+                            </td>
+                            <td style="color: black">{% if item.item_attachment %}
+                                <a href="/item/download/{{ item.item_attachment }}"><i class="fa fa-download" style="color: dodgerblue;"></i></a>
+                                {% else %}
+                                <a >-</a>
                                 {% endif %}
                             </td>
                             <td><a href="{{ url_for('item.read',id=item.item_id)}}" style="color: black;">{{ item.item_title }}</a></td>
@@ -37,6 +43,6 @@
                         {% endfor %}
                     </tbody>
                 </table>
-    </div>
+
 
 {% endblock %}

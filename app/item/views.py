@@ -35,7 +35,17 @@ def write():
         return redirect(url_for('index'))
     return render_template('/item/item_write.html', form=form)
 
+@item.route('/update', methods=['post'])
+@login_required
+def update():
+    return
+
 @item.route('/accept/<int:id>')
 @login_required
 def accept():
+    return
+
+@item.route('/download/<int:id>')
+@login_required
+def download():
     return
