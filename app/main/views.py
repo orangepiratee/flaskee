@@ -40,3 +40,6 @@ def management():
     items = Item.query.order_by(Item.item_datetime.desc()).filter_by(item_author=current_user._get_current_object().user_id)
     return render_template('manage.html', items=items)
 
+@main.route('/temp')
+def temp():
+    return render_template('temp.html')
