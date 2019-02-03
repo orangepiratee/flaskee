@@ -149,19 +149,32 @@
             <div class="top-left">
                 <div class="navbar-header">
                     <a class="navbar-brand" href="/">Flaskee</a>
-
                     <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
                 </div>
             </div>
             <div class="top-right">
                 <div class="header-menu">
                     <div class="header-left">
-
                         {% if current_user.is_authenticated %}
-                        <div class="dropdown for-notification">
-                             <button class="btn btn-secondary dropdown-toggle" type="button" id="notification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fa fa-bell"></i>
-                                <span class="count bg-danger">3</span>
+                        <div class="dropdown for-notification" >
+                             <button  class="btn btn-secondary dropdown-toggle" type="button" id="notification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                 <div class="row">
+                                 {% if current_user.user_role ==2 %}
+                                     <div style="margin-top: -1px;">
+                                         <i class="fa fa-bell"  ></i>
+                                         <div id="unread" class="badge bg-red bg-corner float-right" style="color: red;"></div>
+                                     </div>
+                                 {% elif current_user.user_role ==1 %}
+                                     <div >
+                                         <i class="fa fa-bell "  ></i>
+                                         <div id="newInfo" class="badge bg-red bg-corner float-right" style="background-color: red;color: white;-webkit-border-radius: 50px;-moz-border-radius: 50px;border-radius: 50px;padding-top: 20px;">10</div>
+                                     </div>
+                                     <div>
+                                         <i class="fa fa-envelope"  ></i>
+                                         <div id="newMessage" class="badge bg-red bg-corner float-right" style="color: red;font-size: medium;">10</div>
+                                     </div>
+                                 {% endif %}
+                                 </div>
                             </button>
                             <div class="dropdown-menu" aria-labelledby="notification">
                                 <p class="red">You have 3 Notification</p>
@@ -208,13 +221,55 @@
     <script src="{{ url_for('static', filename='theme181/assets/js/popper.min.js') }}"></script>
     <script src="{{ url_for('static', filename='theme181/assets/js/plugins.js') }}"></script>
     <script src="{{ url_for('static', filename='theme181/assets/js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='theme181/assets/js/lib/chart-js/Chart.bundle.js') }}"></script>
+    <script src="{{ url_for('static', filename='theme181/assets/js/lib/chartist/chartist.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='theme181/assets/js/lib/chartist/chartist-plugin-legend.js') }}"></script>
+    <script src="{{ url_for('static', filename='theme181/assets/js/lib/flot-chart/jquery.flot.js') }}"></script>
+    <script src="{{ url_for('static', filename='theme181/assets/js/lib/flot-chart/jquery.flot.pie.js') }}"></script>
+    <script src="{{ url_for('static', filename='theme181/assets/js/lib/flot-chart/jquery.flot.spline.js') }}"></script>
+    <script src="{{ url_for('static', filename='theme181/assets/weather/js/jquery.simpleWeather.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='theme181/assets/weather/js/weather-init.js') }}"></script>
+    <script src="{{ url_for('static', filename='theme181/assets/js/lib/moment/moment.js') }}"></script>
+    <script src="{{ url_for('static', filename='theme181/assets/calendar/fullcalendar.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='theme181/assets/calendar/fullcalendar-init.js') }}"></script>
+    <script src="{{ url_for('static', filename='theme181/assets/js/init/weather-init.js') }}"></script>
+    <script src="{{ url_for('static', filename='theme181/assets/js/init/fullcalendar-init.js') }}"></script>
 
     <script src="{{ url_for('static', filename='theme181/assets/js/bootstrap.min.js') }}"></script>
     <script src="{{ url_for('static', filename='theme181/assets/js/jquery.matchHeight.min.js') }}"></script>
     <script src="{{ url_for('static', filename='theme181/assets/js/main.js') }}"></script>
     <script src="{{ url_for('static', filename='ckeditor_4.11.2_standard/ckeditor/ckeditor.js') }}"></script>
     <script src="{{ url_for('static', filename='my_funcs.js') }}"></script>
+    <script type="text/javascript">
 
+        function loadXMLDoc()
+        {
+            var xmlhttp;
+            if (window.XMLHttpRequest)
+            {
+                //  IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
+                xmlhttp=new XMLHttpRequest();
+            }
+            else
+            {
+                // IE6, IE5 浏览器执行代码
+                xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp.onreadystatechange=function()
+            {
+                if (xmlhttp.readyState==4 && xmlhttp.status==200)
+                {
+                    document.getElementById("tips").innerHTML=xmlhttp.responseText;
+                }
+            }
+            xmlhttp.open("GET","/count/unread",true);
+            xmlhttp.send();
+        }
+
+        window.onload=function () {
+            loadXMLDoc();
+        }
+    </script>
 </body>
 </html>
 

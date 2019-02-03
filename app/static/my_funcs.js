@@ -14,9 +14,9 @@ function loadXMLDoc(url,cfunc) {
 }
 
 function countUnRead() {
-    loadXMLDoc('/item/count_un_read',function () {
+    loadXMLDoc('/count/unread'),function () {
         if (xmlhttp.readyState ==4 && xmlhttp.status == 200){
-            document.getElementById('unRead').innerHTML = xmlhttp.responseText;
+            document.getElementById('tips').innerHTML = xmlhttp.responseText;
         }
-    });
+    }
 }

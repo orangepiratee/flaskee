@@ -22,6 +22,9 @@ def allowed_file(filename):
 @login_required
 def read(id):
     item = Item.query.filter_by(item_id=id).first_or_404()
+    if(current_user._get_current_object().user_role ==2):
+        item.update({'item_read':1})
+        db.session.commit()
     return render_template('/item/item_read.html', item=item)
 
 @item.route('/modify/<int:id>')

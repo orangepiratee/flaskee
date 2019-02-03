@@ -32,7 +32,6 @@ def signup():
                     user_regtime=datetime.utcnow())
         db.session.add(user)
         db.session.commit()
-        basepath = os.path.abspath()
         return redirect(url_for('auth.signin'))
     return render_template('/auth/signup.html', form=form)
 

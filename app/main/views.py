@@ -40,6 +40,15 @@ def management():
     items = Item.query.order_by(Item.item_datetime.desc()).filter_by(item_author=current_user._get_current_object().user_id)
     return render_template('manage.html', items=items)
 
+@main.route('/count/unread')
+@login_required
+def count_unread():
+    if current_user._get_current_object().user_role >=2:
+        unread = Item.query.filter_by(item_read = 0).count()
+        return str(unread)
+    else:
+        return
+
 @main.route('/temp')
 def temp():
     return render_template('temp.html')
