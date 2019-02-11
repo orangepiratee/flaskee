@@ -18,10 +18,10 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='theme181/assets/css/cs-skin-elastic.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='theme181/assets/css/style.css') }}">
     <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
-    <link href="{{ url_for('static', filename='theme181/assets/weather/css/weather-icons.css') }}" rel="stylesheet" />
+
     <link href="{{ url_for('static', filename='theme181/assets/calendar/fullcalendar.css') }}" rel="stylesheet" />
     <link href="{{ url_for('static', filename='theme181/assets/css/charts/chartist.min.css') }}" rel="stylesheet">
-    <link href="{{ url_for('static', filename='theme181/assets/css/lib/vector-map/jqvmap.min.css') }}" rel="stylesheet">
+
 
     <!-- my define -->
     <link href="{{ url_for('static', filename='my_style.css') }}" rel="stylesheet"/>
@@ -63,7 +63,7 @@
 
     </style>
 </head>
-<body>
+<body >
     <!-- Left Panel -->
     <aside id="left-panel" class="left-panel">
         <nav class="navbar navbar-expand-sm navbar-default">
@@ -228,11 +228,10 @@
     <script src="{{ url_for('static', filename='theme181/assets/js/lib/flot-chart/jquery.flot.js') }}"></script>
     <script src="{{ url_for('static', filename='theme181/assets/js/lib/flot-chart/jquery.flot.pie.js') }}"></script>
     <script src="{{ url_for('static', filename='theme181/assets/js/lib/flot-chart/jquery.flot.spline.js') }}"></script>
-    <script src="{{ url_for('static', filename='theme181/assets/weather/js/jquery.simpleWeather.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='theme181/assets/weather/js/weather-init.js') }}"></script>
+
     <script src="{{ url_for('static', filename='theme181/assets/calendar/fullcalendar.min.js') }}"></script>
     <script src="{{ url_for('static', filename='theme181/assets/calendar/fullcalendar-init.js') }}"></script>
-    <script src="{{ url_for('static', filename='theme181/assets/js/init/weather-init.js') }}"></script>
+
     <script src="{{ url_for('static', filename='theme181/assets/js/init/fullcalendar-init.js') }}"></script>
 
     <script src="{{ url_for('static', filename='theme181/assets/js/Chart.bundle.js') }}"></script>
@@ -243,16 +242,7 @@
     <script src="{{ url_for('static', filename='theme181/assets/js/main.js') }}"></script>
     <script src="{{ url_for('static', filename='ckeditor_4.11.2_standard/ckeditor/ckeditor.js') }}"></script>
     <script src="{{ url_for('static', filename='my_funcs.js') }}"></script>
-    <script type="text/javascript">
 
-
-        window.onload=function () {
-            countUnRead();
-            count_item();
-            count_user();
-
-        }
-    </script>
 </body>
 </html>
 
