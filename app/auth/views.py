@@ -45,7 +45,7 @@ def signout():
 @auth.route('/users', methods=['GET','POST'])
 @login_required
 def users():
-    users = User.query.order_by(User.user_name.desc()).filter_by(user_available=1).all()
+    users = User.query.order_by(User.user_regtime.asc()).filter_by(user_available=1).all()
     return render_template('/user/userlist.html',users=users)
 
 @auth.route('/delete/<int:id>', methods=['GET'])

@@ -49,7 +49,11 @@ def count_unread():
     num_unread = Item.query.filter_by(item_read = 0).count()
     num_users = User.query.filter_by(user_available=1).count()
     num_items = Item.query.filter_by(item_delete=0).count()
-    data = {'num_unread':num_unread,'num_users':num_users,'num_items':num_items}
+    data = {'num_unread': num_unread, 'num_users': num_users, 'num_items': num_items}
+    users = User.query.filter_by(user_available=1).all()
+    for user in users:
+        tempnum = Item.query.filter_by(item_author=user.user_id).count()
+        data[user.user_name] = tempnum
     return jsonify(data)
 
 

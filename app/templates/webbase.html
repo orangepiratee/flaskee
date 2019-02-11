@@ -261,9 +261,20 @@
                 if (xmlhttp.readyState==4 && xmlhttp.status==200)
                 {
                     var obj = JSON.parse(xmlhttp.responseText)
-                    document.getElementById("num_tips").innerHTML=obj['num_unread'];
+
                     document.getElementById('num_users').innerHTML=obj['num_users'];
                     document.getElementById('num_items').innerHTML=obj['num_items'];
+                    document.getElementById('num_tips').innerHTML=obj['num_unread'];
+                    document.getElementById('num_user1').innerHTML=obj['user1'];
+                    document.getElementById('num_user2').innerHTML=obj['user2'];
+                    document.getElementById('num_user3').innerHTML=obj['user3'];
+                    document.getElementById('num_user4').innerHTML=obj['user4'];
+                    document.getElementById('num_user5').innerHTML=obj['user5'];
+                    document.getElementById('percent_user1').style.width=obj['user1']/obj['num_items']
+                    document.getElementById('percent_user2').style.width=obj['user2']/obj['num_items']
+                    document.getElementById('percent_user3').style.width=obj['user3']/obj['num_items']
+                    document.getElementById('percent_user4').style.width=obj['user4']/obj['num_items']
+                    document.getElementById('percent_user5').style.width=obj['user5']/obj['num_items']
                 }
             }
             xmlhttp.open("GET","/count",true);
