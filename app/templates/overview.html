@@ -1,0 +1,42 @@
+{% extends 'webbase.html' %}
+
+
+{% block title %}All Items{% endblock %}
+{% block page_content %}
+    <table class="table table-striped table-hover table-align-middle mb-0">
+        <thead >
+            <tr>
+                <th scope="col" style="width: 15%;">Date</th>
+                <th scope="col" style="width: 3%;" alt="accept">V</th>
+                <th scope="col" style="width: 3%;">A</th>
+                <th scope="col" style="width: 65%;">Title</th>
+                <th scope="col" style="width: 5%;">Category</th>
+                <th scope="col" style="width: 5%;">Author</th>
+
+            </tr>
+        </thead>
+        <tbody style="color: black;">
+            {% for item in items %}
+            <tr>
+                <td style="color: black;font-size: small;">{{ item.item_datetime }}</td>
+                <td>
+                    {% if item.item_accept %}
+                    <i class="fa fa-check" style="color: green;"></i>
+                    {% else %}
+                    <i class="fa fa-times" style="color: red;"></i>
+                    {% endif %}
+                </td>
+                <td style="color: black">{% if item.item_attachment %}
+                    <a href="/item/download/{{ item.item_attachment }}"><i class="fa fa-download" style="color: dodgerblue;"></i></a>
+                    {% else %}
+                    <a >-</a>
+                    {% endif %}
+                </td>
+                <td><a href="{{ url_for('item.read',id=item.item_id)}}" style="color: black;">{{ item.item_title }}</a></td>
+                <td><a href="#" style="color: black;">{{ item.item_category }}</a></td>
+                <td><a href="/user/{{item.item_author }}" style="color: black;">{{ item.item_author }}</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -12,15 +12,17 @@
                         </div>
                         <div class="stat-content">
                             <div class="text-left dib">
-                                <div class="stat-text">{{ user.user_name }}</div>
+                                <div class="stat-text">{{ user.user_name }}
+                                    <a class="btn btn-outline-primary btn-sm">Detial</a>
+                                    <a class="btn btn-outline-success btn-sm">Reset</a>
+                                    <a class="btn btn-outline-danger btn-sm" href="{{ url_for('auth.delete', id=user.user_id) }}">Delete</a>
+                                </div>
                                 <div class="stat-heading">
                                     Role:{{ user.user_role}}, Department:{{ user.user_department}}
                                     LastLogTime:{{ user.user_lastlogtime }}, Available:{{ user.user_available }}
                                 </div>
                             </div>
-                                    <button type="button" class="btn btn-outline-primary btn-sm">Detial</button>
-                                    <button type="button" class="btn btn-outline-success btn-sm">Reset</button>
-                                    <button type="button" class="btn btn-outline-danger btn-sm">Delete</button>
+
                         </div>
                     </div>
                 </div>

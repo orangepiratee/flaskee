@@ -45,5 +45,14 @@ def signout():
 @auth.route('/users', methods=['GET','POST'])
 @login_required
 def users():
-    users = User.query.order_by(User.user_name.desc()).all()
+    users = User.query.order_by(User.user_name.desc()).filter_by(user_available=1).all()
     return render_template('/user/userlist.html',users=users)
+
+@auth.route('/delete/<int:id>', methods=['GET'])
+@login_required
+def delete(id):
+    if (current_user._get_current_object().user_role >= 2):
+        User.query.filter_by(user_id=id).update({'user_available':0})
+        db.session.commit()
+    return redirect(url_for('auth.users'))
+

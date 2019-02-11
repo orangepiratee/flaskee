@@ -14,9 +14,11 @@ function loadXMLDoc(url,cfunc) {
 }
 
 function countUnRead() {
-    loadXMLDoc('/count/unread'),function () {
+    loadXMLDoc('/count/unread',function () {
         if (xmlhttp.readyState ==4 && xmlhttp.status == 200){
-            document.getElementById('tips').innerHTML = xmlhttp.responseText;
+            document.getElementById('num_tips').innerHTML = xmlhttp.responseText;
         }
-    }
+    });
+
 }
+
