@@ -44,25 +44,14 @@ def management():
     items = Item.query.order_by(Item.item_datetime.desc()).filter_by(item_author=current_user._get_current_object().user_id)
     return render_template('manage.html', items=items)
 
-@main.route('/count/unread')
-@login_required
+@main.route('/count')
 def count_unread():
-    if current_user._get_current_object().user_role >=2:
-        unread = Item.query.filter_by(item_read = 0).count()
-        return str(unread)
-    else:
-        return
-
-@main.route('/count/user',methods=['GET'])
-def count_user():
+    num_unread = Item.query.filter_by(item_read = 0).count()
     num_users = User.query.filter_by(user_available=1).count()
-    return str(num_users)
-
-
-@main.route('/count/item', methods=['GET'])
-def count_item():
     num_items = Item.query.filter_by(item_delete=0).count()
-    return str(num_items)
+    data = {'num_unread':num_unread,'num_users':num_users,'num_items':num_items}
+    return jsonify(data)
+
 
 
 @main.route('/temp')

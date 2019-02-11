@@ -243,6 +243,33 @@
     <script src="{{ url_for('static', filename='ckeditor_4.11.2_standard/ckeditor/ckeditor.js') }}"></script>
     <script src="{{ url_for('static', filename='my_funcs.js') }}"></script>
 
+    <script>
+        window.onload = function () {
+            var xmlhttp;
+            if (window.XMLHttpRequest)
+            {
+                //  IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
+                xmlhttp=new XMLHttpRequest();
+            }
+            else
+            {
+                // IE6, IE5 浏览器执行代码
+                xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp.onreadystatechange=function()
+            {
+                if (xmlhttp.readyState==4 && xmlhttp.status==200)
+                {
+                    var obj = JSON.parse(xmlhttp.responseText)
+                    document.getElementById("num_tips").innerHTML=obj['num_unread'];
+                    document.getElementById('num_users').innerHTML=obj['num_users'];
+                    document.getElementById('num_items').innerHTML=obj['num_items'];
+                }
+            }
+            xmlhttp.open("GET","/count",true);
+            xmlhttp.send();
+                }
+    </script>
 </body>
 </html>
 
