@@ -42,6 +42,9 @@ def create_app(config_name):
     from .item import item as item_blueprint
     app.register_blueprint(item_blueprint, url_prefix='/item')
 
+    from .comment import comment as comment_blueprint
+    app.register_blueprint(comment_blueprint, url_prefix='/comment')
+
     return app
 
 

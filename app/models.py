@@ -127,6 +127,19 @@ class Item(db.Model):
         if self.item_category is None:
             self.item_category = 0
 
+class Comment(db.Model):
+    __tablename__ = 't_comment'
+
+    comment_id = Column(INTEGER(11), primary_key=True)
+    comment_content = Column(Text, nullable=False)
+    comment_author = Column(ForeignKey('t_user.user_id'), nullable=False, index=True)
+    comment_author_name = Column(String(45), nullable=False)
+    comment_target = Column(ForeignKey('t_item.item_id'), nullable=False, index=True)
+    comment_datetime = Column(DateTime, nullable=False)
+
+    #t_user = db.relationship('User')
+    #t_item = db.relationship('Item')
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))

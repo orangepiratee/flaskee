@@ -25,7 +25,8 @@ def read(id):
     if(current_user._get_current_object().user_role ==2):
         Item.query.filter_by(item_id=id).update({'item_read':1})
         db.session.commit()
-    return render_template('/item/item_read.html', item=item)
+    comments = Comment.query.filter_by(comment_target=id).order_by(Comment.comment_datetime.desc()).all()
+    return render_template('/item/item_read.html', item=item, comments=comments)
 
 @item.route('/modify/<int:id>')
 @login_required

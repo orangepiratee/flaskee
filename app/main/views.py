@@ -57,7 +57,6 @@ def count_unread():
     return jsonify(data)
 
 
-
 @main.route('/temp')
 def temp():
     return render_template('temp.html')
