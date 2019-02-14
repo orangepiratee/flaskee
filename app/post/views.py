@@ -56,3 +56,10 @@ def add():
 def read(id):
     post = Post.query.filter_by(post_id=id).first_or_404()
     return render_template('/post/post_read.html', post=post)
+
+@post.route('/manage', methods=['GET', 'POST'])
+@login_required
+def management():
+    posts = Post.query.order_by(Post.post_datetime.desc()).filter_by(
+        post_author=current_user._get_current_object().user_id)
+    return render_template('/post/post_manage.html', posts=posts)
