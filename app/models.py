@@ -141,6 +141,20 @@ class Comment(db.Model):
     #t_user = db.relationship('User')
     #t_item = db.relationship('Item')
 
+
+class Post(db.Model):
+    __tablename__ = 't_post'
+
+    post_id = Column(INTEGER(11), primary_key=True)
+    post_title = Column(Text, nullable=False)
+    post_content = Column(Text, nullable=False)
+    post_author = Column(ForeignKey('t_user.user_id'), nullable=False, index=True)
+    post_datetime = Column(DateTime, nullable=False)
+    post_delete = Column(INTEGER(11), nullable=False, server_default=text("'0'"))
+    post_attachment = Column(Text)
+
+    #t_user = relationship('User')
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
