@@ -9,12 +9,7 @@
             <div class="card">
                 <div class="card-header">
                     <div class="row">
-                        <div style="vertical-align: middle">
-                            {% for i in range(item.item_stars) %}
-                            <i class="fa fa-star float-left" style="color: orange;"></i>
-                            {% endfor %}
-                        </div>
-                        <div class="col-lg-10">
+                        <div class="col-lg-11">
                             <h3>{{ item.item_title }}</h3>
                         </div>
                         <div class="col-lg-1"><a href="/overview"><i class="fa fa-times float-right" style="color: red;"></i></a></div>
@@ -25,7 +20,13 @@
                         <span>Write time:<code>{{ item.item_datetime }}</code></span><br>
                         <span>Category:<code>{{ item.item_category }}</code></span><br>
                         <span>Accept:<code>{{ item.item_accept }}</code></span><br>
-                        <span>Attachment:<code><a href="/item/download/{{ item.item_attachment }}" style="color: red" >{{ item.item_attachment }}</a></code></span>
+                        <span>Attachment:<code><a href="/item/download/{{ item.item_attachment }}" style="color: red" >{{ item.item_attachment }}</a></code></span><br>
+                        <span>Stars:
+                            <i class="fa fa-star " style="color: orange;"></i>
+                            {% for i in range(item.item_stars) %}
+                            <i class="fa fa-star " style="color: orange;"></i>
+                            {% endfor %}
+                        </span>
                     </p>
                     <div class="tab-content" id="pills-tabContent">
                         <div class="tab-pane fade show active" role="tabpanel" aria-labelledby="pills-home-tab" >
@@ -36,7 +37,6 @@
                     </div>
                 </div>
                 <div class="card-footer">
-
                     <div class="row">
                     {% if current_user.user_role >=2 %}
                     <span><a href="/item/modify/{{ item.item_id }}" style="color: orange; font-size: small;" class="float-right badge mt-1">MODIFY</a></span>
@@ -56,7 +56,7 @@
                         <form action="/comment/add/{{ item.item_id }}" method="post" enctype="multipart/form-data" class="form-horizontal">
                             <div class="row form-group">
                                 <div class="col-12 col-md-12">
-                                        <textarea name="input_content" id="textarea-input" rows="6" placeholder="Comment..." class="form-control"></textarea>
+                                    <textarea name="input_content" id="textarea-input" rows="6" placeholder="Comment..." class="form-control"></textarea>
                                   </div>
                             </div>
                             <button type="submit" class="btn btn-primary btn-sm">
@@ -74,8 +74,7 @@
                                 <ul>
                                     <li>
                                         <div class="msg-received msg-container">
-                                            <div class="avatar">
-
+                                            <div class="col-lg-1 float-left">
                                                <div class="badge float-right " style="font-size: medium;">{{ comment.comment_author_name }}</div>
                                             </div>
                                             <div class="msg-box col-lg-10">
@@ -90,15 +89,19 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div><!-- /.msg-received -->
+                                        </div>
+                                        <!-- /.msg-received -->
                                     </li>
                                 </ul>
-                            </div><!-- /.messenger-box -->
-                    </div> <!-- /.card-body -->
+                            </div>
+                            <!-- /.messenger-box -->
+                    </div>
+                    <!-- /.card-body -->
                     {% endfor %}
-            </div><!-- /.card -->
+            </div>
+            <!-- /.card -->
         </div>
-            <!-- /To Do and Live Chat -->
+        <!-- /To Do and Live Chat -->
 
 
 {% endblock %}

@@ -38,11 +38,6 @@ def overview():
 def analysis():
     return render_template('analysis.html')
 
-@main.route('/manage', methods=['GET','POST'])
-@login_required
-def management():
-    items = Item.query.order_by(Item.item_datetime.desc()).filter_by(item_author=current_user._get_current_object().user_id)
-    return render_template('manage.html', items=items)
 
 @main.route('/count')
 def count_unread():

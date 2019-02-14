@@ -78,7 +78,7 @@
                         <!--{% if current_user.user_role >= 1 %} -->
                         <li class="menu-title">User View</li><!-- /.menu-title -->
                         <li>
-                            <a href="/manage"><i class="menu-icon fa fa-laptop"></i>Manage</a>
+                            <a href="/item/manage"><i class="menu-icon fa fa-laptop"></i>Manage</a>
                         </li>
 
                         <li>
@@ -90,6 +90,14 @@
                         <li class="menu-title">Manager View</li><!-- /.menu-title -->
                         <li>
                             <a href="/manage"><i class="menu-icon fa fa-laptop"></i>Manage</a>
+                        </li>
+                        <li class="menu-item-has-children dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="menu-icon fa fa-cogs"></i>Post</a>
+                            <ul class="sub-menu children dropdown-menu">
+                                <li><i class="fa fa-puzzle-piece"></i><a href="/post/write">write</a></li>
+                                <li><i class="fa fa-id-badge"></i><a href="/post/manage">posts management</a></li>
+                            </ul>
                         </li>
 
                         <li class="menu-item-has-children dropdown">
@@ -157,38 +165,25 @@
                 <div class="header-menu">
                     <div class="header-left">
                         {% if current_user.is_authenticated %}
-                        <div class="dropdown for-notification" >
-                             <button  class="btn btn-secondary dropdown-toggle" type="button" id="notification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                 <div class="row">
-                                 {% if current_user.user_role >=2 %}
-                                     <div style="margin-top: -1px;">
-                                         <i class="fa fa-bell"  ></i>
-                                         <div id="num_tips" class="badge bg-red bg-corner " style="color: red;"></div>
-                                     </div>
-                                     <div>
-                                         <i class="fa fa-envelope"  ></i>
-                                         <div id="new_messages" class="badge bg-red bg-corner" style="color: red;"></div>
-                                     </div>
-                                 {% elif current_user.user_role ==1 %}
-                                     <div >
-                                         <i class="fa fa-bell "  ></i>
-                                         <div id="newInfo" class="badge bg-red bg-corner float-right" >10</div>
-                                     </div>
-                                     <div>
-                                         <i class="fa fa-envelope"  ></i>
-                                         <div id="newMessage" class="badge bg-red bg-corner float-right" style="color: red;font-size: medium;">10</div>
-                                     </div>
-                                 {% endif %}
+                             <div class="row">
+                             {% if current_user.user_role >=2 %}
+                                 <div class="dropdown for-notification">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="notification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-bell"></i>
+                                        <span id="num_tips" style="color: red;">!</span>
+                                    </button>
+                                    {% for notification in notifications %}
+                                    <div class="dropdown-menu" aria-labelledby="notification">
+                                        <p class="red">You have <strong><span id="" style="color: red;"></span></strong> Notifications</p>
+                                        <a class="dropdown-item media" href="#">
+                                            <i class="fa fa-check"></i>
+                                            <p>Server #1 overloaded.</p>
+                                        </a>
+                                    </div>
+                                    {% endfor %}
                                  </div>
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="notification">
-                                <p class="red">You have 3 Notification</p>
-                                <a class="dropdown-item media" href="#">
-                                    <i class="fa fa-check"></i>
-                                    <p>Server #1 overloaded.</p>
-                                </a>
-                            </div>
-                        </div>
+                             {% endif %}
+                             </div>
                         {% endif %}
                     </div>
                     <div class="user-area dropdown float-right">
@@ -200,6 +195,7 @@
                         </a>
                         {% endif %}
                     </div>
+
                 </div>
             </div>
         </header>
@@ -307,7 +303,6 @@
                 if (xmlhttp.readyState==4 && xmlhttp.status==200)
                 {
                     obj = JSON.parse(xmlhttp.responseText);
-
                     document.getElementById('num_users').innerHTML=obj['num_users'];
                     document.getElementById('num_items').innerHTML=obj['num_items'];
                     document.getElementById('num_user1').innerHTML=obj['user1'];

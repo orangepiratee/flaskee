@@ -46,7 +46,7 @@ def update(id):
         title = request.form.get('input_title')
         content = request.form.get('input_content')
         category = request.form.get('select_category')
-        Item.query.filter_by(item_id=id).update({'item_title':title,'item_content':content,'item_category':category})
+        Item.query.filter_by(item_id=id).update({'item_title':title,'item_content':content,'item_category':category,'item_read':0})
         db.session.commit()
     except:
         db.session.rollback()
@@ -108,3 +108,10 @@ def download(filename):
         if os.path.exists(os.path.join(upload_dir,filename)):
             return send_from_directory(upload_dir,filename,as_attachment=True)
         abort(404)
+
+@item.route('/manage', methods=['GET', 'POST'])
+@login_required
+def management():
+    items = Item.query.order_by(Item.item_datetime.desc()).filter_by(
+        item_author=current_user._get_current_object().user_id)
+    return render_template('manage.html', items=items)
