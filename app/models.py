@@ -113,6 +113,7 @@ class Item(db.Model):
     item_delete = Column(TINYINT(4), nullable=False, server_default=text("'0'"))
     item_attachment = Column(String(255))
     item_author = Column(INTEGER(11),ForeignKey('t_user.user_id'), nullable=False, index=True)
+    item_stars = Column(INTEGER(11), nullable=False, server_default=text("'0'"))
 
     #t_user = db.relationship('User')
 

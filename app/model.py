@@ -52,6 +52,7 @@ class TItem(Base):
     item_accept = Column(TINYINT(4), nullable=False, server_default=text("'0'"))
     item_delete = Column(TINYINT(4), nullable=False, server_default=text("'0'"))
     item_attachment = Column(String(255))
+    item_stars = Column(INTEGER(11), nullable=False, server_default=text("'0'"))
 
     t_user = relationship('TUser')
 
