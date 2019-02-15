@@ -75,7 +75,7 @@ def add_notification(author,author_name,reader,target,index):
 def notification_read(id):
     notification = Notification.query.filter_by(notification_id=id).first_or_404()
     try:
-        notification.update({'notification_read':1})
+        Notification.query.filter_by(notification_id=id).update({'notification_read':1})
         db.session.commit()
     except Exception as e:
         print(e)

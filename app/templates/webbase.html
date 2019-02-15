@@ -274,25 +274,25 @@
                     var notifications = obj['notifications'];
                     notification_length = notifications.length;
 
-                    var p0 = '   <p class="red">You have <strong><span style="color: red;"></span></strong> Notifications</p>\n' +
-                        '        <a class="dropdown-item media" href="#">\n' +
-                        '            <i class="fa fa-check"></i>\n' +
-                        '            <p>Server #1 overloaded.</p>\n' +
-                        '        </a>\n';
-                    var p1 = '<p class="red">You have <strong><span style="color: red;" id="num_tips"></span></strong> Notifications</p>';
-                    var p2 = '<a class="dropdown-item media" href="/notification/';
-                    var p3 = '">\n' +
-                        '         <i class="fa fa-check"></i>\n' +
-                        '           <p>';
-                    var p4 = '</p>\n' +
-                        '         </a>';
-                    for (var i=0;i<notification_length;i++){
-                        var p1 = p1+p2+obj['notifications'][i][0]+p3+obj['notifications'][i][1]+p4;
-                    }
-                    document.getElementById('dropdown_notification').innerHTML=p1;
+                    if (notification_length >0){
+                        var p1 = '<p class="red">You have <strong><span style="color: red;" id="num_tips"></span></strong> Notifications</p>';
+                        var p2 = '<a class="dropdown-item media" href="/notification/';
+                        var p3 = '">\n' +
+                            '         <i class="fa fa-check"></i>\n' +
+                            '           <p>';
+                        var p4 = '</p>\n' +
+                            '         </a>';
+                        for (var i=0;i<notification_length;i++){
+                            var p1 = p1+p2+obj['notifications'][i][0]+p3+obj['notifications'][i][1]+p4;
+                        }
+                        document.getElementById('dropdown_notification').innerHTML=p1;
 
-                    document.getElementById('num_notifications').innerHTML=notification_length;
-                    document.getElementById('num_tips').innerHTML=notification_length;
+                        document.getElementById('num_notifications').innerHTML=notification_length;
+                        document.getElementById('num_tips').innerHTML=notification_length;
+                    }
+
+
+
                     document.getElementById('num_users').innerHTML=obj['num_users'];
                     document.getElementById('num_items').innerHTML=obj['num_items'];
                     document.getElementById('num_user1').innerHTML=obj['user1'];
