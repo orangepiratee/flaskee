@@ -6,6 +6,7 @@ from ..models import *
 from flask_login import login_required, current_user
 from flask import render_template, redirect, url_for, jsonify, request, send_from_directory, abort
 import os,datetime
+from ..main.views import add_notification
 
 
 @comment.route('/add/<int:id>',methods=['POST'])

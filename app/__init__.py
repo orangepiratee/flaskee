@@ -20,6 +20,7 @@ login_manager.login_view = 'auth.signin'
 
 base_dir = os.path.dirname(__file__)
 
+
 def create_app(config_name):
     app = Flask(__name__)
     app.config.from_object(config[config_name])

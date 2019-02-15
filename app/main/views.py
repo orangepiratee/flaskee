@@ -51,6 +51,23 @@ def count_unread():
         data[user.user_name] = tempnum
     return jsonify(data)
 
+notifications = [' post a new broadcast.',
+                 ' submited a new item.',
+                 ' modified an item',
+                 ' modified your item.',
+                 ' accepted your item.',
+                 ' rejected your item']
+def add_notification(author,target,index):
+    try:
+        notification = Notification(notification_author=author,
+                                    notification_content=notifications[index],
+                                    notification_target=target,
+                                    notification_datetime=datetime.utcnow(),
+                                    notification_read=0)
+        db.session.add(notification)
+        db.session.commit()
+    except Exception as e:
+        print(e)
 
 @main.route('/temp')
 def temp():

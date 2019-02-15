@@ -1,11 +1,12 @@
 #!/usr/bin/env python
-from flask import render_template, redirect, url_for, jsonify, request, send_from_directory, abort
+from flask import render_template, redirect, url_for, jsonify, request, send_from_directory, abort, flash
 from app import db,base_dir
 from flask_login import login_required,current_user
 from . import post
 from ..models import *
 import os
 from datetime import datetime
+from ..main.views import add_notification
 
 ALLOWED_EXTENSIONS = set(['pdf'])
 upload_dir = os.path.join(base_dir, 'upload')
@@ -49,7 +50,8 @@ def add():
     except Exception as e:
         print(e)
         db.session.rollback()
-        return render_template('/post/post_write.html')
+        flash('Somethin goes wrong...try again later,please')
+        return render_template('/post/post_write.html', )
 
 @post.route('/read/<int:id>', methods=['GET'])
 @login_required

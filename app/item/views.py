@@ -9,6 +9,7 @@ from ..models import *
 from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename
 import os, base64
+from ..main.views import add_notification
 
 ALLOWED_EXTENSIONS = set(['zip','rar','tar','pdf'])
 upload_dir = os.path.join(base_dir, 'upload')

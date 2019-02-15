@@ -155,6 +155,18 @@ class Post(db.Model):
 
     #t_user = relationship('User')
 
+class Notification(db.Model):
+    __tablename__ = 't_notification'
+
+    notification_id = Column(INTEGER(11), primary_key=True)
+    notification_content = Column(Text, nullable=False)
+    notification_author = Column(ForeignKey('t_user.user_id'), nullable=False, index=True)
+    notification_target = Column(Text)
+    notification_datetime = Column(DateTime, nullable=False)
+    notification_read = Column(INTEGER(11), nullable=False, server_default=text("'0'"))
+
+    #t_user = relationship('User')
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
