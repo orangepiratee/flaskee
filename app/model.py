@@ -77,11 +77,13 @@ class TNotification(Base):
     notification_id = Column(INTEGER(11), primary_key=True)
     notification_content = Column(Text, nullable=False)
     notification_author = Column(ForeignKey('t_user.user_id'), nullable=False, index=True)
+    notification_reader = Column(ForeignKey('t_user.user_id'), nullable=False, index=True)
     notification_target = Column(Text)
     notification_datetime = Column(DateTime, nullable=False)
     notification_read = Column(INTEGER(11), nullable=False, server_default=text("'0'"))
 
-    t_user = relationship('TUser')
+    t_user = relationship('TUser', primaryjoin='TNotification.notification_author == TUser.user_id')
+    t_user1 = relationship('TUser', primaryjoin='TNotification.notification_reader == TUser.user_id')
 
 
 class TPost(Base):

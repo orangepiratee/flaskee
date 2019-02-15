@@ -46,6 +46,9 @@ def add():
             db.session.add(post)
             db.session.commit()
             temp_id = post.post_id
+            users = User.query.filter_by(user_available=1).order_by(User.user_regtime.desc()).all()
+            for user in users:
+                add_notification(post.post_author,current_user._get_current_object().user_name,user.user_id,'/post/'+str(post.post_id),1)
             return redirect(url_for('post.read',id=temp_id))
     except Exception as e:
         print(e)

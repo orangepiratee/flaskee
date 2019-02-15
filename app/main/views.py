@@ -7,7 +7,7 @@ from .forms import *
 from app import db
 from ..models import *
 from flask_login import login_required, current_user
-
+import json
 
 @main.route('/test', methods=['GET','POST'])
 def test():
@@ -24,13 +24,6 @@ def index():
 @main.route('/overview')
 def overview():
     items = Item.query.order_by(Item.item_datetime.desc()).all()
-    '''tempusers = []
-    for user in users:
-        temp = {}
-        temp['user_name']=user.user_name
-        temp['user_id']=user.user_id
-        tempusers.append(temp)
-    session['users'] = users'''
     return render_template('overview.html', items=items)
 
 @main.route('/analysis')
@@ -49,18 +42,24 @@ def count_unread():
     for user in users:
         tempnum = Item.query.filter_by(item_author=user.user_id).count()
         data[user.user_name] = tempnum
+    data['notifications']=[]
+    notifications = Notification.query.filter_by(notification_reader=current_user._get_current_object().user_id).order_by(Notification.notification_datetime.desc()).all()
+    for notification in notifications:
+        data['notifications'].append(((notification.notification_content,notification.notification_target,notification.notification_datetime)))
     return jsonify(data)
 
-notifications = [' post a new broadcast.',
+NOTIFICATIONS = ['',
+                 ' post a new broadcast.',
                  ' submited a new item.',
                  ' modified an item',
                  ' modified your item.',
                  ' accepted your item.',
                  ' rejected your item']
-def add_notification(author,target,index):
+def add_notification(author,author_name,reader,target,index):
     try:
         notification = Notification(notification_author=author,
-                                    notification_content=notifications[index],
+                                    notification_reader=reader,
+                                    notification_content=author_name+NOTIFICATIONS[index],
                                     notification_target=target,
                                     notification_datetime=datetime.utcnow(),
                                     notification_read=0)
@@ -68,6 +67,7 @@ def add_notification(author,target,index):
         db.session.commit()
     except Exception as e:
         print(e)
+        pass
 
 @main.route('/temp')
 def temp():
