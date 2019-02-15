@@ -48,6 +48,13 @@ def update(id):
         content = request.form.get('input_content')
         category = request.form.get('select_category')
         Item.query.filter_by(item_id=id).update({'item_title':title,'item_content':content,'item_category':category,'item_read':0})
+        # generate a notification
+        user = current_user._get_current_object()
+        if user.user_role ==2:
+            add_notification(user.user_id,user.user_name,Item.query.filter_by(item_id=id).first_or_404().item_author,'/item/'+id,3)
+        else:
+            add_notification(user.user_id,user.user_name,User.query.filter_by(user_role=2).first_or_404().user_id,
+                             '/item/'+id,2)
         db.session.commit()
     except:
         db.session.rollback()
@@ -59,21 +66,32 @@ def add():
     try:
         title = request.form.get('input_title')
         content = request.form.get('input_content')
-        category = request.form.get('select_category')
-        f = request.files['file_attachment']
         if len(title)!=0 and len(content)!=0 :
             # handle uploadfile first
-            if f and allowed_file(f.filename):
-                f.save(os.path.join(upload_dir,f.filename))
-            item = Item(item_title=title,
-                        item_content=content,
-                        item_category=category,
-                        item_datetime=datetime.utcnow(),
-                        item_author=current_user._get_current_object().user_id,
-                        item_attachment=f.filename)
+            try:
+                category = request.form.get('select_category')
+                f = request.files['file_attachment']
+                if f and allowed_file(f.filename):
+                    f.save(os.path.join(upload_dir,f.filename))
+                item = Item(item_title=title,
+                            item_content=content,
+                            item_category=category,
+                            item_datetime=datetime.utcnow(),
+                            item_author=current_user._get_current_object().user_id,
+                            item_attachment=f.filename)
+            except:
+                item = Item(item_title=title,
+                            item_content=content,
+                            item_category=category,
+                            item_datetime=datetime.utcnow(),
+                            item_author=current_user._get_current_object().user_id)
+
             db.session.add(item)
             db.session.commit()
             temp_id = item.item_id
+            # generate a notification to manager
+            add_notification(item.item_author, User.query.filter_by(user_id=item.item_author).first_or_404().user_name,
+                             User.query.filter_by(user_role=2), '/item/'+str(temp_id),2)
             return redirect(url_for('item.read',id=temp_id))
     except Exception as e:
         print(e)
