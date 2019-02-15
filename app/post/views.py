@@ -68,3 +68,8 @@ def management():
     posts = Post.query.order_by(Post.post_datetime.desc()).filter_by(
         post_author=current_user._get_current_object().user_id)
     return render_template('/post/post_manage.html', posts=posts)
+
+@post.route('<int:id>',methods=['GET'])
+@login_required
+def reed(id):
+    return redirect(url_for('post.read',id=id))

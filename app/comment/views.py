@@ -27,4 +27,8 @@ def addcomment(id):
             db.session.rollback()
     return redirect('/item/read/'+str(id))
 
-
+@comment.route('<int:id>',methods='GET')
+@login_required
+def comment_read(id):
+    comment = Comment.query.filter_by(comment_id=id).first_or_404()
+    return redirect(url_for('item.read',id=comment.comment_target))

@@ -116,3 +116,8 @@ def management():
     items = Item.query.order_by(Item.item_datetime.desc()).filter_by(
         item_author=current_user._get_current_object().user_id)
     return render_template('manage.html', items=items)
+
+@item.route('<int:id>',methods=['GET'])
+@login_required
+def item_read(id):
+    redirect(url_for('item.read',id=id))

@@ -175,20 +175,21 @@
                         {% if current_user.is_authenticated %}
                              <div class="row">
                              {% if current_user.user_role >=2 %}
-                                 <div class="dropdown for-notification">
+                                 <div class="dropdown for-notification" >
                                     <button class="btn btn-secondary dropdown-toggle" type="button" id="notification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="fa fa-bell"></i>
-                                        <span id="num_tips" style="color: red;">!</span>
+                                        <span id="num_notifications" style="color: red;" ></span>
                                     </button>
-                                    {% for notification in notifications %}
-                                    <div class="dropdown-menu" aria-labelledby="notification">
-                                        <p class="red">You have <strong><span id="" style="color: red;"></span></strong> Notifications</p>
+                                    <div class="dropdown-menu" id="dropdown_notification" aria-labelledby="notification">
+                                        {% for notification in notifications %}
+                                        <p class="red">You have <strong><span style="color: red;"></span></strong> Notifications</p>
                                         <a class="dropdown-item media" href="#">
                                             <i class="fa fa-check"></i>
                                             <p>Server #1 overloaded.</p>
                                         </a>
+                                        {% endfor %}
                                     </div>
-                                    {% endfor %}
+
                                  </div>
                              {% endif %}
                              </div>
@@ -270,7 +271,28 @@
                 if (xmlhttp.readyState==4 && xmlhttp.status==200)
                 {
                     obj = JSON.parse(xmlhttp.responseText);
-                    document.getElementById('num_tips').innerHTML=obj['num_unread'];
+                    var notifications = obj['notifications'];
+                    notification_length = notifications.length;
+
+                    var p0 = '   <p class="red">You have <strong><span style="color: red;"></span></strong> Notifications</p>\n' +
+                        '        <a class="dropdown-item media" href="#">\n' +
+                        '            <i class="fa fa-check"></i>\n' +
+                        '            <p>Server #1 overloaded.</p>\n' +
+                        '        </a>\n';
+                    var p1 = '<p class="red">You have <strong><span style="color: red;" id="num_tips"></span></strong> Notifications</p>';
+                    var p2 = '<a class="dropdown-item media" href="/notification/';
+                    var p3 = '">\n' +
+                        '         <i class="fa fa-check"></i>\n' +
+                        '           <p>';
+                    var p4 = '</p>\n' +
+                        '         </a>';
+                    for (var i=0;i<notification_length;i++){
+                        var p1 = p1+p2+obj['notifications'][i][0]+p3+obj['notifications'][i][1]+p4;
+                    }
+                    document.getElementById('dropdown_notification').innerHTML=p1;
+
+                    document.getElementById('num_notifications').innerHTML=notification_length;
+                    document.getElementById('num_tips').innerHTML=notification_length;
                     document.getElementById('num_users').innerHTML=obj['num_users'];
                     document.getElementById('num_items').innerHTML=obj['num_items'];
                     document.getElementById('num_user1').innerHTML=obj['user1'];
@@ -292,6 +314,13 @@
                 }
     </script>
     {% else %}
+    <div class="dropdown-menu" aria-labelledby="notification">
+        <p class="red">You have <strong><span id="" style="color: red;"></span></strong> Notifications</p>
+        <a class="dropdown-item media" href="#">
+            <i class="fa fa-check"></i>
+            <p>Server #1 overloaded.</p>
+        </a>
+    </div>
     <script>
         window.onload = function () {
             var xmlhttp;

@@ -43,9 +43,10 @@ def count_unread():
         tempnum = Item.query.filter_by(item_author=user.user_id).count()
         data[user.user_name] = tempnum
     data['notifications']=[]
-    notifications = Notification.query.filter_by(notification_reader=current_user._get_current_object().user_id).order_by(Notification.notification_datetime.desc()).all()
+    notifications = Notification.query.filter_by(notification_reader=current_user._get_current_object().user_id)\
+                                        .filter_by(notification_read=0).order_by(Notification.notification_datetime.desc()).all()
     for notification in notifications:
-        data['notifications'].append(((notification.notification_content,notification.notification_target,notification.notification_datetime)))
+        data['notifications'].append(((notification.notification_id,notification.notification_content,notification.notification_datetime)))
     return jsonify(data)
 
 NOTIFICATIONS = ['',
@@ -68,6 +69,18 @@ def add_notification(author,author_name,reader,target,index):
     except Exception as e:
         print(e)
         pass
+
+@main.route('/notification/<int:id>',methods=['GET'])
+@login_required
+def notification_read(id):
+    notification = Notification.query.filter_by(notification_id=id).first_or_404()
+    try:
+        notification.update({'notification_read':1})
+        db.session.commit()
+    except Exception as e:
+        print(e)
+        db.session.rollback()
+    return redirect(notification.notification_target)
 
 @main.route('/temp')
 def temp():
