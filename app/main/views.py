@@ -42,11 +42,14 @@ def count_unread():
     for user in users:
         tempnum = Item.query.filter_by(item_author=user.user_id).count()
         data[user.user_name] = tempnum
-    data['notifications']=[]
-    notifications = Notification.query.filter_by(notification_reader=current_user._get_current_object().user_id)\
-                                        .filter_by(notification_read=0).order_by(Notification.notification_datetime.desc()).all()
-    for notification in notifications:
-        data['notifications'].append(((notification.notification_id,notification.notification_content,notification.notification_datetime)))
+    try:
+        data['notifications']=[]
+        notifications = Notification.query.filter_by(notification_reader=current_user._get_current_object().user_id)\
+                                            .filter_by(notification_read=0).order_by(Notification.notification_datetime.desc()).all()
+        for notification in notifications:
+            data['notifications'].append(((notification.notification_id,notification.notification_content,notification.notification_datetime)))
+    except:
+        pass
     return jsonify(data)
 
 NOTIFICATIONS = ['',
