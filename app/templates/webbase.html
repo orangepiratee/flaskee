@@ -292,10 +292,33 @@
                         document.getElementById('num_notifications').innerHTML=notification_length;
                         document.getElementById('num_tips').innerHTML=notification_length;
                     }
+                    // total static
                     document.getElementById('num_users').innerHTML=obj['num_users'];
                     document.getElementById('num_items').innerHTML=obj['num_items'];
-                    document.getElementById('num_user1').innerHTML=obj['user1'];
-                    document.getElementById('num_user2').innerHTML=obj['user2'];
+
+                    // every user static
+
+                    document.getElementById('num_user1_total').innerHTML=obj['user1']['total'];
+                    document.getElementById('num_user1_accept').innerHTML=obj['user1']['accept'];
+                    document.getElementById('num_user1_reject').innerHTML=obj['user1']['reject'];
+                    document.getElementById('num_user1_unread').innerHTML=obj['user1']['unread'];
+                    document.getElementById('num_user2_total').innerHTML=obj['user2']['total'];
+                    document.getElementById('num_user2_accept').innerHTML=obj['user2']['accept'];
+                    document.getElementById('num_user2_reject').innerHTML=obj['user2']['reject'];
+                    document.getElementById('num_user2_unread').innerHTML=obj['user2']['unread'];
+                    document.getElementById('num_user3_total').innerHTML=obj['user3']['total'];
+                    document.getElementById('num_user3_accept').innerHTML=obj['user3']['accept'];
+                    document.getElementById('num_user3_reject').innerHTML=obj['user3']['reject'];
+                    document.getElementById('num_user3_unread').innerHTML=obj['user3']['unread'];
+                    document.getElementById('num_user4_total').innerHTML=obj['root']['total'];
+                    document.getElementById('num_user4_accept').innerHTML=obj['root']['accept'];
+                    document.getElementById('num_user4_reject').innerHTML=obj['root']['reject'];
+                    document.getElementById('num_user4_unread').innerHTML=obj['root']['unread'];
+                    document.getElementById('num_user5_total').innerHTML=obj['manager']['total'];
+                    document.getElementById('num_user5_accept').innerHTML=obj['manager']['accept'];
+                    document.getElementById('num_user5_reject').innerHTML=obj['manager']['reject'];
+                    document.getElementById('num_user5_unread').innerHTML=obj['manager']['unread'];
+                    document.getElementById('num_user5').innerHTML=obj['user2'];
                     document.getElementById('num_user3').innerHTML=obj['user3'];
                     document.getElementById('num_user4').innerHTML=obj['user4'];
                     document.getElementById('num_user5').innerHTML=obj['user5'];

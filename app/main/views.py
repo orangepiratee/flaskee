@@ -43,8 +43,11 @@ def count_unread():
     data = {'num_unread': num_unread, 'num_users': num_users, 'num_items': num_items}
     users = User.query.filter_by(user_available=1).all()
     for user in users:
-        tempnum = Item.query.filter_by(item_author=user.user_id).count()
-        data[user.user_name] = tempnum
+        temp_total = Item.query.filter_by(item_author=user.user_id).count()
+        temp_accept = Item.query.filter_by(item_author=user.user_id).filter_by(item_accept=1).count()
+        temp_reject = Item.query.filter_by(item_author=user.user_id).filter_by(item_accept=0).count()
+        temp_unread = Item.query.filter_by(item_author=user.user_id).filter_by(item_read=0).count()
+        data[user.user_name] = {'total':temp_total,'accept':temp_accept,'reject':temp_reject,'unread':temp_unread}
     try:
         data['notifications']=[]
         notifications = Notification.query.filter_by(notification_reader=current_user._get_current_object().user_id)\
