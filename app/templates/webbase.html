@@ -73,64 +73,68 @@
                         <a href="/"><i class="menu-icon fa fa-laptop"></i>HomePage</a>
                         <a href="/overview"><i class="menu-icon fa fa-laptop"></i>Items</a>
                         <a href="/posts"><i class="menu-icon fa fa-laptop"></i>Posts</a>
+
                     </li>
+                    <li class="menu-item-has-children dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="menu-icon fa fa-cogs"></i>User</a>
+                            <ul class="sub-menu children dropdown-menu">
+                                <li><i class="fa fa-puzzle-piece"></i><a href="#">User-1</a></li>
+                                <li><i class="fa fa-id-badge"></i><a href="#">User-2</a></li>
+                            </ul>
+                        </li>
+                        <li class="menu-item-has-children dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="menu-icon fa fa-cogs"></i>User</a>
+                            <ul class="sub-menu children dropdown-menu">
+                                <li><i class="fa fa-puzzle-piece"></i><a href="#">User-1</a></li>
+                                <li><i class="fa fa-id-badge"></i><a href="#">User-2</a></li>
+                            </ul>
+                        </li>
+                        <li class="menu-item-has-children dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="menu-icon fa fa-cogs"></i>User</a>
+                            <ul class="sub-menu children dropdown-menu">
+                                <li><i class="fa fa-puzzle-piece"></i><a href="#">User-1</a></li>
+                                <li><i class="fa fa-id-badge"></i><a href="#">User-2</a></li>
+                            </ul>
+                        </li>
                     {% if current_user.is_authenticated %}
                         <!-- common user -->
                         {% if current_user.user_role == 1 or current_user.user_role == 3 %}
                         <li class="menu-title">User View</li><!-- /.menu-title -->
                         <li>
-                            <a href="/item/manage"><i class="menu-icon fa fa-laptop"></i>Manage</a>
+                            <a href="/item/manage"><i class="menu-icon fa fa-laptop"></i>Item-Manage</a>
                         </li>
 
                         <li>
-                            <a href="/item/write"><i class="menu-icon fa fa-laptop"></i>Write</a>
+                            <a href="/item/write"><i class="menu-icon fa fa-laptop"></i>Item-Write</a>
                         </li>
                         {% endif %}
                         <!-- manager -->
                         {% if current_user.user_role == 2 or current_user.user_role == 3%}
                         <li class="menu-title">Manager View</li><!-- /.menu-title -->
                         <li>
-                            <a href="/item/manage"><i class="menu-icon fa fa-laptop"></i>Manage</a>
+                            <a href="/item/manage"><i class="menu-icon fa fa-laptop"></i>Item-Manage</a>
                         </li>
-                        <li class="menu-item-has-children dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="menu-icon fa fa-cogs"></i>Post</a>
-                            <ul class="sub-menu children dropdown-menu">
-                                <li><i class="fa fa-puzzle-piece"></i><a href="/post/write">write</a></li>
-                                <li><i class="fa fa-id-badge"></i><a href="/post/manage">posts management</a></li>
-                            </ul>
+                        <li>
+                            <a href="/item/write"><i class="menu-icon fa fa-laptop"></i>Item-Write</a>
+                        </li>
+                        <li>
+                            <a href="/post/manage"><i class="menu-icon fa fa-laptop"></i>Post-Manage</a>
+                        </li>
+                        <li>
+                            <a href="/post/write"><i class="menu-icon fa fa-laptop"></i>Post-Write</a>
                         </li>
 
-                        <li class="menu-item-has-children dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="menu-icon fa fa-cogs"></i>User</a>
-                            <ul class="sub-menu children dropdown-menu">
-                                <li><i class="fa fa-puzzle-piece"></i><a href="#">User-1</a></li>
-                                <li><i class="fa fa-id-badge"></i><a href="#">User-2</a></li>
-                            </ul>
-                        </li>
-                        <li class="menu-item-has-children dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="menu-icon fa fa-cogs"></i>User</a>
-                            <ul class="sub-menu children dropdown-menu">
-                                <li><i class="fa fa-puzzle-piece"></i><a href="#">User-1</a></li>
-                                <li><i class="fa fa-id-badge"></i><a href="#">User-2</a></li>
-                            </ul>
-                        </li>
-                        <li class="menu-item-has-children dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="menu-icon fa fa-cogs"></i>User</a>
-                            <ul class="sub-menu children dropdown-menu">
-                                <li><i class="fa fa-puzzle-piece"></i><a href="#">User-1</a></li>
-                                <li><i class="fa fa-id-badge"></i><a href="#">User-2</a></li>
-                            </ul>
-                        </li>
+
+
                         {% endif %}
                         <!-- super admin -->
                         {% if current_user.user_role == 3 %}
                         <li class="menu-title">Admin View</li><!-- /.menu-title -->
                         <li>
-                            <a href="/manage"><i class="menu-icon fa fa-laptop"></i>Manage</a>
+                            <a href="/manage"><i class="menu-icon fa fa-laptop"></i>Item Manage</a>
                         </li>
                         <li class="menu-item-has-children dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -168,14 +172,16 @@
                 <div class="navbar-header">
                     <a class="navbar-brand" href="/">Flaskee</a>
                     <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
+
                 </div>
             </div>
             <div class="top-right">
                 <div class="header-menu">
                     <div class="header-left">
+
                         {% if current_user.is_authenticated %}
                              <div class="row">
-                             {% if current_user.user_role >=2 %}
+                             {% if current_user.user_role >=1 %}
                                  <div class="dropdown for-notification" >
                                     <button class="btn btn-secondary dropdown-toggle" type="button" id="notification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="fa fa-bell"></i>
@@ -210,6 +216,30 @@
             </div>
         </header>
         <!-- /Header-->
+        <div class="breadcrumbs">
+            <div class="breadcrumbs-inner">
+                <div class="row m-0">
+                    <div class="col-sm-4 " style="display: none;">
+                        <div class="page-header float-left">
+                            <div class="page-title">
+                                <h1 id="page_tips">{{page_tips}}</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12" >
+                        <div class="page-header float-left">
+                            <div class="page-title">
+                                <ol class="breadcrumb text-right">
+                                    <li><a>{{ pt1 }}</a></li>
+                                    <li><a >{{ pt2 }}</a></li>
+                                    <li class="active">{{ pt3 }}</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Content -->
         <div class="content">
             <!-- Animated -->
@@ -220,9 +250,7 @@
                     {{ message }}
                 </div>
                 {% endfor %}
-
                 {% block page_content %}{% endblock %}
-
             </div>
 
         </div>

@@ -20,6 +20,10 @@ login_manager.login_view = 'auth.signin'
 
 base_dir = os.path.dirname(__file__)
 
+pt1=['Items','Posters']
+pt2=['Read','Write','Modify','List','Manage']
+pt3=['Category','Author','Id']
+
 
 def create_app(config_name):
     app = Flask(__name__)

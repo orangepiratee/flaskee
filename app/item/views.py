@@ -4,7 +4,7 @@ from datetime import datetime
 from flask import render_template, redirect, url_for, jsonify, request, send_from_directory, abort
 from . import item
 from .forms import *
-from app import db, base_dir
+from app import db, base_dir,pt1,pt2,pt3
 from ..models import *
 from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename
@@ -27,7 +27,7 @@ def read(id):
         Item.query.filter_by(item_id=id).update({'item_read':1})
         db.session.commit()
     comments = Comment.query.filter_by(comment_target=id).order_by(Comment.comment_datetime.desc()).all()
-    return render_template('/item/item_read.html', item=item, comments=comments)
+    return render_template('/item/item_read.html', item=item, comments=comments,pt1=pt1[0],pt2=pt2[0],pt3=pt3[2])
 
 @item.route('<int:id>',methods=['GET'])
 @login_required
@@ -38,12 +38,12 @@ def item_read(id):
 @login_required
 def modify(id):
     item = Item.query.filter_by(item_id=id).first_or_404()
-    return render_template('/item/item_modify.html', item=item)
+    return render_template('/item/item_modify.html', item=item,pt1=pt1[0],pt2=pt2[2],pt3=pt3[2])
 
 @item.route('/write', methods=['GET','POST'])
 @login_required
 def write():
-    return render_template('/item/item_write.html')
+    return render_template('/item/item_write.html',pt1=pt1[0],pt2=pt2[1])
 
 @item.route('/update/<int:id>', methods=['POST'])
 @login_required
@@ -152,5 +152,17 @@ def download(filename):
 @login_required
 def management():
     items = Item.query.order_by(Item.item_datetime.desc()).filter_by(
-        item_author=current_user._get_current_object().user_id)
-    return render_template('manage.html', items=items)
+        item_author=current_user._get_current_object().user_id).all()
+    return render_template('manage.html', items=items,pt1=pt1[0],pt2=pt2[4])
+
+@item.route('/categoryshow/<int:id>',methods=['GET'])
+@login_required
+def categoryshow(id):
+    items = Item.query.filter_by(item_category=id).order_by(Item.item_datetime.desc()).all()
+    return render_template('manage.html', items=items,pt1=pt1[0],pt2=pt2[3],pt3=pt3[0])
+
+@item.route('/authorshow/<int:id>',methods=['GET'])
+@login_required
+def authorshow(id):
+    items = Item.query.filter_by(item_author=id).order_by(Item.item_datetime.desc()).all()
+    return render_template('manage.html', items=items,pt1=pt1[0],pt2=pt2[3],pt3=pt3[1])

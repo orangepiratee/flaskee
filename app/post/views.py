@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 from flask import render_template, redirect, url_for, jsonify, request, send_from_directory, abort, flash
-from app import db,base_dir
+from app import db,base_dir,pt1,pt2,pt3
 from flask_login import login_required,current_user
 from . import post
 from ..models import *
@@ -19,7 +19,7 @@ def allowed_file(filename):
 @post.route('/write',methods=['GET'])
 @login_required
 def write():
-    return render_template('/post/post_write.html')
+    return render_template('/post/post_write.html',pt1=pt1[1],pt2=pt2[1])
 
 @post.route('/add', methods=['POST'])
 @login_required
@@ -71,8 +71,8 @@ def reed(id):
 @login_required
 def management():
     posts = Post.query.order_by(Post.post_datetime.desc()).filter_by(
-        post_author=current_user._get_current_object().user_id)
-    return render_template('/post/post_manage.html', posts=posts)
+        post_author=current_user._get_current_object().user_id).all()
+    return render_template('/post/post_manage.html', posts=posts,pt1=pt1[1],pt2=pt2[4])
 
 @post.route('/show/<string:fname>',methods=['POST','GET'])
 @login_required

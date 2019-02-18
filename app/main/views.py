@@ -4,7 +4,7 @@ from datetime import datetime
 from flask import render_template, session, redirect, url_for, jsonify
 from . import main
 from .forms import *
-from app import db
+from app import db,base_dir,pt1,pt2,pt3
 from ..models import *
 from flask_login import login_required, current_user
 import json
@@ -22,12 +22,12 @@ def test():
 
 @main.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html',pt2='HomePage')
 
 @main.route('/overview')
 def overview():
     items = Item.query.order_by(Item.item_datetime.desc()).all()
-    return render_template('overview.html', items=items)
+    return render_template('overview.html', items=items,pt1=pt1[0],pt2=pt2[3])
 
 @main.route('/analysis')
 @login_required
@@ -38,7 +38,7 @@ def analysis():
 @login_required
 def posts():
     posts = Post.query.order_by(Post.post_datetime.desc()).all()
-    return render_template('/post/post_manage.html',posts=posts)
+    return render_template('/post/post_manage.html',posts=posts,pt1=pt1[1],pt2=pt2[3])
 
 @main.route('/count')
 def count_unread():

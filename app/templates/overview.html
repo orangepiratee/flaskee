@@ -32,9 +32,9 @@
                     <a >-</a>
                     {% endif %}
                 </td>
-                <td><a href="{{ url_for('item.read',id=item.item_id)}}" style="color: black;">{{ item.item_title }}</a></td>
-                <td><a href="#" style="color: black;">{{ item.item_category }}</a></td>
-                <td><a href="/user/{{item.item_author }}" style="color: black;">{{ item.item_author }}</a></td>
+                <td><a href="{{ url_for('item.read',id=item.item_id) }}" style="color: black;">{{ item.item_title }}</a></td>
+                <td><a href="{{ url_for('item.categoryshow',id=item.item_category) }}" style="color: black;">{{ item.item_category }}</a></td>
+                <td><a href="{{ url_for('item.authorshow',id=item.item_author) }}" style="color: black;">{{ item.item_author }}</a></td>
             </tr>
             {% endfor %}
         </tbody>
