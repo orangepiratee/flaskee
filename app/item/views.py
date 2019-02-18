@@ -29,6 +29,11 @@ def read(id):
     comments = Comment.query.filter_by(comment_target=id).order_by(Comment.comment_datetime.desc()).all()
     return render_template('/item/item_read.html', item=item, comments=comments)
 
+@item.route('<int:id>',methods=['GET'])
+@login_required
+def item_read(id):
+    return redirect(url_for('item.read',id=id))
+
 @item.route('/modify/<int:id>')
 @login_required
 def modify(id):
@@ -48,14 +53,19 @@ def update(id):
         content = request.form.get('input_content')
         category = request.form.get('select_category')
         Item.query.filter_by(item_id=id).update({'item_title':title,'item_content':content,'item_category':category,'item_read':0})
-        # generate a notification
-        user = current_user._get_current_object()
-        if user.user_role ==2:
-            add_notification(user.user_id,user.user_name,Item.query.filter_by(item_id=id).first_or_404().item_author,'/item/'+id,3)
-        else:
-            add_notification(user.user_id,user.user_name,User.query.filter_by(user_role=2).first_or_404().user_id,
-                             '/item/'+id,2)
         db.session.commit()
+        # generate a notification
+        try:
+            user = current_user._get_current_object()
+            if user.user_role == 2:
+                add_notification(user.user_id, user.user_name, Item.query.filter_by(item_id=id).first_or_404().item_author,
+                                 '/item/' + str(id), 4)
+            else:
+                add_notification(user.user_id, user.user_name, User.query.filter_by(user_role=2).first_or_404().user_id,
+                                 '/item/' + str(id), 3)
+        except Exception as e:
+            print(e)
+            pass
     except:
         db.session.rollback()
     return redirect(url_for('item.read',id=id))
@@ -90,8 +100,9 @@ def add():
             db.session.commit()
             temp_id = item.item_id
             # generate a notification to manager
-            add_notification(item.item_author, User.query.filter_by(user_id=item.item_author).first_or_404().user_name,
-                             User.query.filter_by(user_role=2), '/item/'+str(temp_id),2)
+            temp_user = current_user._get_current_object()
+            add_notification(temp_user.user_id, temp_user.user_name,
+                             User.query.filter_by(user_role=2).first_or_404().user_id, '/item/'+str(temp_id),2)
             return redirect(url_for('item.read',id=temp_id))
     except Exception as e:
         print(e)
@@ -101,10 +112,14 @@ def add():
 @item.route('/accept/<int:id>')
 @login_required
 def accept(id):
-    if current_user._get_current_object().user_id >=2:
+    if current_user._get_current_object().user_role >=2:
         try:
             Item.query.filter_by(item_id=id).update({'item_accept':1})
             db.session.commit()
+            add_notification(current_user._get_current_object().user_id,
+                             current_user._get_current_object().user_name,
+                             Item.query.filter_by(item_id=id).first_or_404().item_author,
+                             '/item/'+str(id),5)
         except:
             db.session.rollback()
     return redirect(url_for('item.read',id=id))
@@ -112,10 +127,14 @@ def accept(id):
 @item.route('/reject/<int:id>')
 @login_required
 def reject(id):
-    if current_user._get_current_object().user_id >=2:
+    if current_user._get_current_object().user_role >=2:
         try:
             Item.query.filter_by(item_id=id).update({'item_accept':0})
             db.session.commit()
+            add_notification(current_user._get_current_object().user_id,
+                             current_user._get_current_object().user_name,
+                             Item.query.filter_by(item_id=id).first_or_404().item_author,
+                             '/item/' + str(id), 6)
         except:
             db.session.rollback()
     return redirect(url_for('item.read',id=id))
@@ -134,8 +153,3 @@ def management():
     items = Item.query.order_by(Item.item_datetime.desc()).filter_by(
         item_author=current_user._get_current_object().user_id)
     return render_template('manage.html', items=items)
-
-@item.route('<int:id>',methods=['GET'])
-@login_required
-def item_read(id):
-    redirect(url_for('item.read',id=id))

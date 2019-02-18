@@ -62,6 +62,11 @@ def read(id):
     post = Post.query.filter_by(post_id=id).first_or_404()
     return render_template('/post/post_read.html', post=post)
 
+@post.route('<int:id>',methods=['GET'])
+@login_required
+def reed(id):
+    return redirect(url_for('post.read',id=id))
+
 @post.route('/manage', methods=['GET', 'POST'])
 @login_required
 def management():
@@ -69,7 +74,9 @@ def management():
         post_author=current_user._get_current_object().user_id)
     return render_template('/post/post_manage.html', posts=posts)
 
-@post.route('<int:id>',methods=['GET'])
+@post.route('/show/<string:fname>',methods=['POST','GET'])
 @login_required
-def reed(id):
-    return redirect(url_for('post.read',id=id))
+def show(fname):
+    attachment=base_dir+'/upload/'+fname
+    return render_template('/post/show.html',attachment=attachment)
+    #return redirect('http://127.0.0.1:5000/static/pdfjs/web/viewer.html?file://'+attachment)

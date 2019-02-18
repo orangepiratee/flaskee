@@ -8,24 +8,6 @@ Base = declarative_base()
 metadata = Base.metadata
 
 
-class TMessage(Base):
-    __tablename__ = 't_message'
-
-    message_id = Column(INTEGER(11), primary_key=True)
-    message_content = Column(Text, nullable=False)
-    message_datetime = Column(DateTime, nullable=False)
-    message_delete = Column(INTEGER(11), server_default=text("'0'"))
-
-
-class TRole(Base):
-    __tablename__ = 't_role'
-
-    role_id = Column(INTEGER(11), primary_key=True)
-    role_name = Column(String(45))
-    role_default = Column(TINYINT(4), server_default=text("'0'"))
-    role_permission = Column(INTEGER(11))
-
-
 class TUser(Base):
     __tablename__ = 't_user'
 
@@ -54,20 +36,6 @@ class TItem(Base):
     item_attachment = Column(String(255))
     item_stars = Column(INTEGER(11), nullable=False, server_default=text("'0'"))
 
-    t_user = relationship('TUser')
-
-
-class TMessageUser(Base):
-    __tablename__ = 't_message_user'
-
-    m_u_id = Column(INTEGER(11), primary_key=True)
-    m_u_mid = Column(ForeignKey('t_message.message_id'), nullable=False, index=True)
-    m_u_uid = Column(ForeignKey('t_user.user_id'), nullable=False, index=True)
-    m_u_read = Column(INTEGER(11), nullable=False)
-    m_u_readtime = Column(DateTime, nullable=False)
-    m_u_delete = Column(INTEGER(11), nullable=False, server_default=text("'0'"))
-
-    t_message = relationship('TMessage')
     t_user = relationship('TUser')
 
 

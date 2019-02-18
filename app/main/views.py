@@ -14,7 +14,10 @@ def test():
     form = NameForm()
     if form.validate_on_submit():
         #return redirect(url_for('.index'))
-        db.create_all()
+        items = Item.query.filter_by(item_read=0).all()
+        for item in items:
+            add_notification(item.item_author,User.query.filter_by(user_id=item.item_author).first_or_404().user_name,
+                             User.query.filter_by(user_role=2).first_or_404().user_id,'/item/'+str(item.item_id),1)
     return render_template('test.html',form=form, current_time=datetime.utcnow())
 
 @main.route('/')
@@ -53,17 +56,17 @@ def count_unread():
     return jsonify(data)
 
 NOTIFICATIONS = ['',
-                 ' post a new broadcast.',
-                 ' submited a new item.',
-                 ' modified an item',
-                 ' modified your item.',
-                 ' accepted your item.',
-                 ' rejected your item']
+                 ' post a new broadcast.',#1
+                 ' submited a new item.',#2
+                 ' modified an item',#3
+                 ' modified your item.',#4
+                 ' accepted your item.',#5
+                 ' rejected your item']#6
 def add_notification(author,author_name,reader,target,index):
     try:
         notification = Notification(notification_author=author,
                                     notification_reader=reader,
-                                    notification_content=author_name+NOTIFICATIONS[index],
+                                    notification_content=str(author_name)+NOTIFICATIONS[index],
                                     notification_target=target,
                                     notification_datetime=datetime.utcnow(),
                                     notification_read=0)

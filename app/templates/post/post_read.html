@@ -1,7 +1,7 @@
 {% extends 'webbase.html' %}
 {% import 'bootstrap/wtf.html' as wtf %}
 
-{% block title %}Post Read{% endblock %}
+{% block title %}Post - Read{% endblock %}
 
 {% block page_content %}
 
@@ -18,7 +18,7 @@
                 <div class="card-body">
                     <p class="text-muted m-b-15">
                         <span>Write time:<code>{{ post.post_datetime }}</code></span><br>
-                        <span>Attachment:<code><a href="/item/download/{{ post.post_attachment }}" style="color: red" >{{ post.post_attachment }}</a></code></span><br>
+                        <span>Attachment:<code><a href="/post/show/{{ post.post_attachment }}" style="color: red" >{{ post.post_attachment }}</a></code></span><br>
                     </p>
                     <div class="tab-content" id="pills-tabContent">
                         <div class="tab-pane fade show active" role="tabpanel" aria-labelledby="pills-home-tab" >
@@ -27,6 +27,38 @@
                             </pre>
                         </div>
                     </div>
+                </div>
+                <script type="text/javascript">
+                function showPdf() {
+                    var container = document.getElementById("container");
+                    container.style.display = "block";
+                    var url = '../../upload/celery.pdf';
+                    PDFJS.workerSrc = '../../static/pdfjs/build/pdf.worker.js';
+                    PDFJS.getDocument(url).then(function getPdfHelloWorld(pdf) {
+                        pdf.getPage(1).then(function getPageHelloWorld(page) {
+                            var scale = 1;
+                            var viewport = page.getViewport(scale);
+                            var canvas = document.getElementById('the-canvas');
+                            var context = canvas.getContext('2d');
+                            canvas.height = viewport.height;
+                            canvas.width = viewport.width;
+                            var renderContext = {
+                                canvasContext: context,
+                                viewport: viewport
+                            };
+                            page.render(renderContext);
+                        });
+                    });
+                }
+            </script>
+                <h1><a href="javascript:void(0)" target="_blank" onclick="showPdf()">显示pdf文档</a></h1>
+                <div class="card-body">
+                    <div id="container" style="display: none;">
+                    <div class="lightbox"></div>
+                    <div id="pop" class="pop">
+                    <canvas id="the-canvas"></canvas>
+                    </div>
+                </div>
                 </div>
                 <div class="card-footer">
                     <div class="row">
@@ -38,7 +70,7 @@
             </div>
         </div>
 
-        </div>
+
         <!-- /To Do and Live Chat -->
 
 

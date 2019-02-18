@@ -7,4 +7,4 @@ from wtforms.validators import DataRequired, Length
 
 class NameForm(FlaskForm):
     name = StringField('What is your name?', validators=[DataRequired()])
-    submit = SubmitField('create table')
+    submit = SubmitField('create notification')
