@@ -20,7 +20,9 @@
                         <span>Write time:<code>{{ item.item_datetime }}</code></span><br>
                         <span>Category:<code>{{ item.item_category }}</code></span><br>
                         <span>Accept:<code>{{ item.item_accept }}</code></span><br>
+                        {% if item.attachment %}
                         <span>Attachment:<code><a href="/item/download/{{ item.item_attachment }}" style="color: red" >{{ item.item_attachment }}</a></code></span><br>
+                        {% endif %}
                         <span>Stars:
                             <i class="fa fa-star " style="color: orange;"></i>
                             {% for i in range(item.item_stars) %}

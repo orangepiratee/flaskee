@@ -12,7 +12,7 @@ from ..main.views import add_notification
 @comment.route('/add/<int:id>',methods=['POST'])
 @login_required
 def addcomment(id):
-    if current_user._get_current_object().user_role >= 2:
+    if current_user._get_current_object().user_role >= 1:
         try:
             content = request.form.get('input_content')
             comment = Comment(comment_content = content,
@@ -25,7 +25,11 @@ def addcomment(id):
         except Exception as e:
             print(e)
             db.session.rollback()
-    return redirect('/item/read/'+str(id))
+            return redirect('/item/write')
+        return redirect('/item/read/'+str(id))
+    else:
+        return redirect('/item/write')
+
 
 @comment.route('<int:id>',methods=['GET'])
 @login_required

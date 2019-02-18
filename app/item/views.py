@@ -76,10 +76,10 @@ def add():
     try:
         title = request.form.get('input_title')
         content = request.form.get('input_content')
+        category = request.form.get('select_category')
         if len(title)!=0 and len(content)!=0 :
             # handle uploadfile first
             try:
-                category = request.form.get('select_category')
                 f = request.files['file_attachment']
                 if f and allowed_file(f.filename):
                     f.save(os.path.join(upload_dir,f.filename))
@@ -95,7 +95,6 @@ def add():
                             item_category=category,
                             item_datetime=datetime.utcnow(),
                             item_author=current_user._get_current_object().user_id)
-
             db.session.add(item)
             db.session.commit()
             temp_id = item.item_id
@@ -104,6 +103,8 @@ def add():
             add_notification(temp_user.user_id, temp_user.user_name,
                              User.query.filter_by(user_role=2).first_or_404().user_id, '/item/'+str(temp_id),2)
             return redirect(url_for('item.read',id=temp_id))
+        else:
+            return render_template('/item/item_write.html')
     except Exception as e:
         print(e)
         db.session.rollback()

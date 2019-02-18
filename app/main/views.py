@@ -34,6 +34,11 @@ def overview():
 def analysis():
     return render_template('analysis.html')
 
+@main.route('/posts',methods=['GET'])
+@login_required
+def posts():
+    posts = Post.query.order_by(Post.post_datetime.desc()).all()
+    return render_template('/post/post_manage.html',posts=posts)
 
 @main.route('/count')
 def count_unread():

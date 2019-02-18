@@ -71,11 +71,12 @@
                 <ul class="nav navbar-nav">
                     <li>
                         <a href="/"><i class="menu-icon fa fa-laptop"></i>HomePage</a>
-                        <a href="/overview"><i class="menu-icon fa fa-laptop"></i>Overview</a>
+                        <a href="/overview"><i class="menu-icon fa fa-laptop"></i>Items</a>
+                        <a href="/posts"><i class="menu-icon fa fa-laptop"></i>Posts</a>
                     </li>
                     {% if current_user.is_authenticated %}
                         <!-- common user -->
-                        <!--{% if current_user.user_role >= 1 %} -->
+                        {% if current_user.user_role == 1 or current_user.user_role == 3 %}
                         <li class="menu-title">User View</li><!-- /.menu-title -->
                         <li>
                             <a href="/item/manage"><i class="menu-icon fa fa-laptop"></i>Manage</a>
@@ -86,7 +87,7 @@
                         </li>
                         {% endif %}
                         <!-- manager -->
-                        {% if current_user.user_role >= 2 %}
+                        {% if current_user.user_role == 2 or current_user.user_role == 3%}
                         <li class="menu-title">Manager View</li><!-- /.menu-title -->
                         <li>
                             <a href="/item/manage"><i class="menu-icon fa fa-laptop"></i>Manage</a>
@@ -126,7 +127,7 @@
                         </li>
                         {% endif %}
                         <!-- super admin -->
-                        {% if current_user.user_role >= 3 %}
+                        {% if current_user.user_role == 3 %}
                         <li class="menu-title">Admin View</li><!-- /.menu-title -->
                         <li>
                             <a href="/manage"><i class="menu-icon fa fa-laptop"></i>Manage</a>
@@ -297,7 +298,18 @@
                     document.getElementById('num_items').innerHTML=obj['num_items'];
 
                     // every user static
-
+                    var user_static = '<div class="progress-box progress-1">\n' +
+                        '                                <h4 class="por-title">User1</h4>\n' +
+                        '                                <div class="por-txt">\n' +
+                        '                                    <strong><span id="num_user1_total">96,930 Users (40%)</span></strong> Items,\n' +
+                        '                                    <span id="num_user1_accept">96,930 Users (40%)</span> accept,\n' +
+                        '                                    <span id="num_user1_reject">96,930 Users (40%)</span> reject,\n' +
+                        '                                    <span id="num_user1_unread">96,930 Users (40%)</span> unread,\n' +
+                        '                                </div>\n' +
+                        '                                <div class="progress mb-2" style="height: 5px;">\n' +
+                        '                                    <div id="percent_user1" class="progress-bar bg-flat-color-1" role="progressbar" style="width: 40%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>\n' +
+                        '                                </div>\n' +
+                        '                            </div>';
                     document.getElementById('num_user1_total').innerHTML=obj['user1']['total'];
                     document.getElementById('num_user1_accept').innerHTML=obj['user1']['accept'];
                     document.getElementById('num_user1_reject').innerHTML=obj['user1']['reject'];
