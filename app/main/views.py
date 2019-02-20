@@ -22,7 +22,7 @@ def test():
 
 @main.route('/')
 def index():
-    return render_template('index.html',pt2='HomePage')
+    return render_template('index.html',pt2='HomePage',data=count_data())
 
 @main.route('/overview')
 def overview():
@@ -41,18 +41,8 @@ def posts():
     return render_template('/post/post_manage.html',posts=posts,pt1=pt1[1],pt2=pt2[3])
 
 @main.route('/count')
-def count_unread():
-    num_unread = Item.query.filter_by(item_read = 0).count()
-    num_users = User.query.filter_by(user_available=1).count()
-    num_items = Item.query.filter_by(item_delete=0).count()
-    data = {'num_unread': num_unread, 'num_users': num_users, 'num_items': num_items}
-    users = User.query.filter_by(user_available=1).all()
-    for user in users:
-        temp_total = Item.query.filter_by(item_author=user.user_id).count()
-        temp_accept = Item.query.filter_by(item_author=user.user_id).filter_by(item_accept=1).count()
-        temp_reject = Item.query.filter_by(item_author=user.user_id).filter_by(item_accept=0).count()
-        temp_unread = Item.query.filter_by(item_author=user.user_id).filter_by(item_read=0).count()
-        data[user.user_name] = {'total':temp_total,'accept':temp_accept,'reject':temp_reject,'unread':temp_unread}
+def count_notifications():
+    data = {}
     try:
         data['notifications']=[]
         notifications = Notification.query.filter_by(notification_reader=current_user._get_current_object().user_id)\
@@ -62,6 +52,29 @@ def count_unread():
     except:
         pass
     return jsonify(data)
+
+
+def count_data():
+    num_unread = Item.query.filter_by(item_read=0).count()
+    num_users = User.query.filter_by(user_available=1).count()
+    num_items = Item.query.filter_by(item_delete=0).count()
+    data = {'num_unread': num_unread, 'num_users': num_users, 'num_items': num_items}
+    users = User.query.filter_by(user_available=1).all()
+    data['users'] = {}
+    inx = 1
+    for user in users:
+        if user.user_name!= 'root':
+            temp_total = Item.query.filter_by(item_author=user.user_id).count()
+            temp_accept = Item.query.filter_by(item_author=user.user_id).filter_by(item_accept=1).count()
+            temp_reject = Item.query.filter_by(item_author=user.user_id).filter_by(item_accept=0).count()
+            temp_unread = Item.query.filter_by(item_author=user.user_id).filter_by(item_read=0).count()
+            data['users'][user.user_name] = {'inx':inx,'total': temp_total, 'accept': temp_accept, 'reject': temp_reject,
+                                             'unread': temp_unread, 'percentage':int(temp_total/num_items*100)}
+            inx +=1
+        else:
+            continue
+    return data
+
 
 NOTIFICATIONS = ['',
                  ' post a new broadcast.',#1

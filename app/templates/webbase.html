@@ -327,17 +327,18 @@
 
                     // every user static
                     var user_static = '<div class="progress-box progress-1">\n' +
-                        '                                <h4 class="por-title">User1</h4>\n' +
-                        '                                <div class="por-txt">\n' +
-                        '                                    <strong><span id="num_user1_total">96,930 Users (40%)</span></strong> Items,\n' +
-                        '                                    <span id="num_user1_accept">96,930 Users (40%)</span> accept,\n' +
-                        '                                    <span id="num_user1_reject">96,930 Users (40%)</span> reject,\n' +
-                        '                                    <span id="num_user1_unread">96,930 Users (40%)</span> unread,\n' +
-                        '                                </div>\n' +
-                        '                                <div class="progress mb-2" style="height: 5px;">\n' +
-                        '                                    <div id="percent_user1" class="progress-bar bg-flat-color-1" role="progressbar" style="width: 40%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>\n' +
-                        '                                </div>\n' +
-                        '                            </div>';
+            '                                <h4 class="por-title" >User1</h4>\n' +
+            '                                <div class="por-txt">\n' +
+            '                                    <strong><span id="num_total">96,930 Users (40%)</span></strong> Items,\n' +
+            '                                    <span >96,930 Users (40%)</span> accept,\n' +
+            '                                    <span >96,930 Users (40%)</span> reject,\n' +
+            '                                    <span >96,930 Users (40%)</span> unread,\n' +
+            '                                </div>\n' +
+            '                                <div class="progress mb-2" style="height: 5px;">\n' +
+            '                                    <div id="percent_user1" class="progress-bar bg-flat-color-1" role="progressbar" style="width: 40%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>\n' +
+            '                                </div>\n' +
+            '                            </div>\n';
+
                     document.getElementById('num_user1_total').innerHTML=obj['user1']['total'];
                     document.getElementById('num_user1_accept').innerHTML=obj['user1']['accept'];
                     document.getElementById('num_user1_reject').innerHTML=obj['user1']['reject'];
