@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from datetime import datetime
+
 from flask import render_template, session, redirect, url_for, jsonify
 from . import main
 from .forms import *
@@ -8,6 +8,9 @@ from app import db,base_dir,pt1,pt2,pt3
 from ..models import *
 from flask_login import login_required, current_user
 import json
+from datetime import datetime,timedelta
+from ..mysql import *
+
 
 @main.route('/test', methods=['GET','POST'])
 def test():
@@ -54,6 +57,32 @@ def count_notifications():
     return jsonify(data)
 
 
+
+months = ['1','2','3','4','5',',6',',7']
+today = datetime.now().strftime('%Y-%m-%d')
+now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+
+def count_data_bytime(userid,n=0):
+    delta = timedelta(days=n)
+    n_days = datetime.now() - delta
+    time_start = n_days.strftime('%Y-%m-%d')
+    num_Items = select(cursor,"select count(*) from flaskee.t_item where item_author = '{}' "
+                              "and item_datetime >= '{}'".format(userid,time_start))
+    return num_Items
+
+def count_data_bymonth(userid,y=2019,m=0):
+    m_start = '{}-{}'.format(y,m)
+    m_end = '{}-{}'.format(y,m+1)
+    num_items = select(cursor,"select count(*) from flaskee.t_item where item_author = '{}' "
+                              "and item_datetime >= '{}' and item_datetime < '{}'".format(userid,m_start,m_end))
+    return num_items
+
+def count_data_byyear(userid,y=2019):
+    num_items = select(cursor,"select count(*) from flaskee.t_item where item_author = '{}' "
+                              "and item_datetime >= '{}' and item_datetime < '{}'".format(userid,y,y+1))
+    return num_items
+
 def count_data():
     num_unread = Item.query.filter_by(item_read=0).count()
     num_users = User.query.filter_by(user_available=1).count()
@@ -63,13 +92,19 @@ def count_data():
     data['users'] = {}
     inx = 1
     for user in users:
-        if user.user_name!= 'root':
+        if user.user_name:
             temp_total = Item.query.filter_by(item_author=user.user_id).count()
             temp_accept = Item.query.filter_by(item_author=user.user_id).filter_by(item_accept=1).count()
             temp_reject = Item.query.filter_by(item_author=user.user_id).filter_by(item_accept=0).count()
             temp_unread = Item.query.filter_by(item_author=user.user_id).filter_by(item_read=0).count()
+            num_week = count_data_bytime(user.user_id,3)
+            num_month = count_data_bytime(user.user_id,30)
+            num_month_1 = count_data_bymonth(user.user_id,m=1)
+            num_year = count_data_byyear(user.user_id,2019)
+            num_today = count_data_bytime(user.user_id)
             data['users'][user.user_name] = {'inx':inx,'total': temp_total, 'accept': temp_accept, 'reject': temp_reject,
-                                             'unread': temp_unread, 'percentage':int(temp_total/num_items*100)}
+                                             'unread': temp_unread, 'percentage':int(temp_total/num_items*100),
+                                             'num_today':num_today,'num_week':num_week,'num_month':num_month,'num_mon1':num_month_1,'num_year1':num_year}
             inx +=1
         else:
             continue
