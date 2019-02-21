@@ -79,28 +79,43 @@ def count_data_byyear(userid,y=2019):
                               "and item_datetime >= '{}' and item_datetime < '{}'".format(userid,y,y+1))
     return num_items
 
-def count_today(userid):
-    num_items = select(cursor,"select count(*) from flaskee.t_item where item_author = '{}' "
-                        "and item_datetime = to_days(now());".format(userid))
+def count_today(userid=0):
+    if userid == 0:
+        num_items = select(cursor, "select count(*) from flaskee.t_item where to_days(item_datetime) = to_days(now());")
+    else:
+        num_items = select(cursor,"select count(*) from flaskee.t_item where item_author = '{}' "
+                        "and to_days(item_datetime) = to_days(now());".format(userid))
     return num_items
 
-def count_thismonth(userid):
-    num_items = select(cursor,"select count(*) from flaskee.t_item where item_author = '{}' "
+def count_thismonth(userid=0):
+    if userid == 0:
+        num_items = select(cursor, "select count(*) from flaskee.t_item where date_format(item_datetime,'%Y%m') = date_format(curdate(),'%Y%m');")
+    else:
+        num_items = select(cursor,"select count(*) from flaskee.t_item where item_author = '{}' "
                               "and date_format(item_datetime,'%Y%m') = date_format(curdate(),'%Y%m');".format(userid))
     return num_items
 
-def count_thisweek(userid):
-    num_items = select(cursor,"select count(*) from flaskee.t_item where item_author = '{}' "
+def count_thisweek(userid=0):
+    if userid == 0:
+        num_items = select(cursor, "select count(*) from flaskee.t_item where yearweek(date_format(item_datetime,'%Y-%m-%d')) = yearweek(now())")
+    else:
+        num_items = select(cursor,"select count(*) from flaskee.t_item where item_author = '{}' "
                               "and yearweek(date_format(item_datetime,'%Y-%m-%d')) = yearweek(now())".format(userid))
     return num_items
 
-def count_thisyear(userid):
-    num_items = select(cursor,"select count(*) from flaskee.t_item where item_author = '{}' "
+def count_thisyear(userid=0):
+    if userid ==0:
+        num_items = select(cursor, "select count(*) from flaskee.t_item year(item_datetime) = year(now())")
+    else:
+        num_items = select(cursor,"select count(*) from flaskee.t_item where item_author = '{}' "
                               "and year(item_datetime) = year(now())".format(userid))
     return num_items
 
-def count_thisseason(userid):
-    num_items = select(cursor,"select count(*) from flaskee.t_item where item_author = '{}' "
+def count_thisseason(userid=0):
+    if userid ==0:
+        num_items = select(cursor, "select count(*) from flaskee.t_item where quarter(item_datetime) = quarter(now())")
+    else:
+        num_items = select(cursor,"select count(*) from flaskee.t_item where item_author = '{}' "
                               "and quarter(item_datetime) = quarter(now())".format(userid))
     return num_items
 
@@ -123,7 +138,8 @@ def count_data():
     num_unread = Item.query.filter_by(item_read=0).count()
     num_users = User.query.filter_by(user_available=1).count()
     num_items = Item.query.filter_by(item_delete=0).count()
-    data = {'num_unread': num_unread, 'num_users': num_users, 'num_items': num_items}
+    num_items_today = count_today()
+    data = {'num_unread': num_unread, 'num_users': num_users, 'num_items': num_items, 'num_items_today':num_items_today}
     users = User.query.filter_by(user_available=1).all()
     data['users'] = {}
     inx = 1
