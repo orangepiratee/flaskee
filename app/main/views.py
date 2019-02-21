@@ -83,6 +83,7 @@ def count_data_byyear(userid,y=2019):
                               "and item_datetime >= '{}' and item_datetime < '{}'".format(userid,y,y+1))
     return num_items
 
+
 def count_data():
     num_unread = Item.query.filter_by(item_read=0).count()
     num_users = User.query.filter_by(user_available=1).count()
@@ -97,14 +98,16 @@ def count_data():
             temp_accept = Item.query.filter_by(item_author=user.user_id).filter_by(item_accept=1).count()
             temp_reject = Item.query.filter_by(item_author=user.user_id).filter_by(item_accept=0).count()
             temp_unread = Item.query.filter_by(item_author=user.user_id).filter_by(item_read=0).count()
+            num_today = count_data_bytime(user.user_id)
             num_week = count_data_bytime(user.user_id,3)
             num_month = count_data_bytime(user.user_id,30)
             num_month_1 = count_data_bymonth(user.user_id,m=1)
-            num_year = count_data_byyear(user.user_id,2019)
-            num_today = count_data_bytime(user.user_id)
+            num_year_19 = count_data_byyear(user.user_id,2019)
+
             data['users'][user.user_name] = {'inx':inx,'total': temp_total, 'accept': temp_accept, 'reject': temp_reject,
                                              'unread': temp_unread, 'percentage':int(temp_total/num_items*100),
-                                             'num_today':num_today,'num_week':num_week,'num_month':num_month,'num_mon1':num_month_1,'num_year1':num_year}
+                                             'num_today':num_today,'num_week':num_week,'num_month':num_month,'num_mon1':num_month_1,
+                                             'num_year_19':num_year_19}
             inx +=1
         else:
             continue
