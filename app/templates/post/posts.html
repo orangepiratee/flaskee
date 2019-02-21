@@ -32,14 +32,16 @@
 
                             <td><a href="/user/{{post.post_author }}" style="color: black;">{{ post.post_author }}</a></td>
                             <td>
-                            {% if current_user.user_role >=2 %}
+
+                            {% if current_user.isauthenticated %}
+                                 {% if current_user.user_role >=2 %}
                             <a href="/post/modify/{{ post.post_id }}"  style="color: green;">
                                 <i class="fa fa-pencil"></i>
                             </a>
                             <a href="/post/delete/{{ post.post_id }}"  style="color: red;">
                                 <i class="fa fa-trash-o"></i>
                             </a>
-
+                                {% endif %}
                             {% else %}
                                 <span>-</span>
                             {% endif %}

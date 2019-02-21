@@ -72,7 +72,7 @@ def reed(id):
 def management():
     posts = Post.query.order_by(Post.post_datetime.desc()).filter_by(
         post_author=current_user._get_current_object().user_id).all()
-    return render_template('/post/post_manage.html', posts=posts,pt1=pt1[1],pt2=pt2[4])
+    return render_template('/post/posts.html', posts=posts,pt1=pt1[1],pt2=pt2[4])
 
 @post.route('/show/<string:fname>',methods=['POST','GET'])
 @login_required

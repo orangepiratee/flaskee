@@ -27,21 +27,15 @@ def test():
 def index():
     return render_template('index.html',pt2='HomePage',data=count_data())
 
-@main.route('/overview')
+@main.route('/items')
 def overview():
     items = Item.query.order_by(Item.item_datetime.desc()).all()
-    return render_template('overview.html', items=items,pt1=pt1[0],pt2=pt2[3])
-
-@main.route('/analysis')
-@login_required
-def analysis():
-    return render_template('analysis.html')
+    return render_template('/item/items.html', items=items,pt1=pt1[0],pt2=pt2[3])
 
 @main.route('/posts',methods=['GET'])
-@login_required
 def posts():
     posts = Post.query.order_by(Post.post_datetime.desc()).all()
-    return render_template('/post/post_manage.html',posts=posts,pt1=pt1[1],pt2=pt2[3])
+    return render_template('/post/posts.html',posts=posts,pt1=pt1[1],pt2=pt2[3])
 
 @main.route('/count')
 def count_notifications():
@@ -57,6 +51,8 @@ def count_notifications():
     return jsonify(data)
 
 
+conn = get_conn()
+cursor = conn.cursor()
 
 months = ['1','2','3','4','5',',6',',7']
 today = datetime.now().strftime('%Y-%m-%d')
@@ -83,6 +79,45 @@ def count_data_byyear(userid,y=2019):
                               "and item_datetime >= '{}' and item_datetime < '{}'".format(userid,y,y+1))
     return num_items
 
+def count_today(userid):
+    num_items = select(cursor,"select count(*) from flaskee.t_item where item_author = '{}' "
+                        "and item_datetime = to_days(now());".format(userid))
+    return num_items
+
+def count_thismonth(userid):
+    num_items = select(cursor,"select count(*) from flaskee.t_item where item_author = '{}' "
+                              "and date_format(item_datetime,'%Y%m') = date_format(curdate(),'%Y%m');".format(userid))
+    return num_items
+
+def count_thisweek(userid):
+    num_items = select(cursor,"select count(*) from flaskee.t_item where item_author = '{}' "
+                              "and yearweek(date_format(item_datetime,'%Y-%m-%d')) = yearweek(now())".format(userid))
+    return num_items
+
+def count_thisyear(userid):
+    num_items = select(cursor,"select count(*) from flaskee.t_item where item_author = '{}' "
+                              "and year(item_datetime) = year(now())".format(userid))
+    return num_items
+
+def count_thisseason(userid):
+    num_items = select(cursor,"select count(*) from flaskee.t_item where item_author = '{}' "
+                              "and quarter(item_datetime) = quarter(now())".format(userid))
+    return num_items
+
+sqls = ["",
+        "select * from 表名 where (时间字段名) = to_days(now());",#today
+        "SELECT * FROM 表名 WHERE TO_DAYS( NOW( ) ) - TO_DAYS( 时间字段名) <= 1;",#yesterday
+        "SELECT * FROM 表名 where DATE_SUB(CURDATE(), INTERVAL 7 DAY) <= date(时间字段名);",#last 7days
+        "SELECT * FROM 表名 WHERE DATE_FORMAT( 时间字段名, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )",#this month
+        "SELECT * FROM 表名 WHERE PERIOD_DIFF( date_format( now( ) , '%Y%m' ) , date_format( 时间字段名, '%Y%m' ) ) =1",#last month
+        "select * from 表名 where QUARTER(时间字段名)=QUARTER(now());",#this season
+        "select * from 表名 where QUARTER(时间字段名)=QUARTER(DATE_SUB(now(),interval 1 QUARTER));",#last season
+        "select * from 表名 where YEAR(时间字段名)=YEAR(NOW())",#this year
+        "select * from 表名 where year(时间字段名)=year(date_sub(now(),interval 1 year));",#last year
+        "SELECT * FROM 表名 WHERE YEARWEEK(date_format(时间字段名,'%Y-%m-%d')) = YEARWEEK(now());",#this week
+        "SELECT *  FROM 表名 WHERE YEARWEEK(date_format(时间字段名,'%Y-%m-%d')) = YEARWEEK(now())-1;",#last week
+        "select * from enterprise where date_format(时间字段名,'%Y-%m')=date_format(DATE_SUB(curdate(), INTERVAL 1 MONTH),'%Y-%m');"#last month
+        ]
 
 def count_data():
     num_unread = Item.query.filter_by(item_read=0).count()
@@ -98,21 +133,19 @@ def count_data():
             temp_accept = Item.query.filter_by(item_author=user.user_id).filter_by(item_accept=1).count()
             temp_reject = Item.query.filter_by(item_author=user.user_id).filter_by(item_accept=0).count()
             temp_unread = Item.query.filter_by(item_author=user.user_id).filter_by(item_read=0).count()
-            num_today = count_data_bytime(user.user_id)
-            num_week = count_data_bytime(user.user_id,3)
-            num_month = count_data_bytime(user.user_id,30)
-            num_month_1 = count_data_bymonth(user.user_id,m=1)
-            num_year_19 = count_data_byyear(user.user_id,2019)
-
+            num_today = count_today(user.user_id)
+            num_month = count_thismonth(user.user_id)
+            num_week = count_thisweek(user.user_id)
+            num_year = count_thisyear(user.user_id)
+            num_season = count_thisseason(user.user_id)
             data['users'][user.user_name] = {'inx':inx,'total': temp_total, 'accept': temp_accept, 'reject': temp_reject,
                                              'unread': temp_unread, 'percentage':int(temp_total/num_items*100),
-                                             'num_today':num_today,'num_week':num_week,'num_month':num_month,'num_mon1':num_month_1,
-                                             'num_year_19':num_year_19}
+                                             'num_today':num_today,'num_week':num_week,'num_month':num_month,'num_season':num_season,
+                                             'num_year':num_year}
             inx +=1
         else:
             continue
     return data
-
 
 NOTIFICATIONS = ['',
                  ' post a new broadcast.',#1

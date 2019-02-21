@@ -19,8 +19,6 @@ def get_conn():
 #    conn.commit()
 #    return cursor
 
-conn = get_conn()
-cursor = conn.cursor()
 
 def select(cursor,sql):
     cursor.execute(sql)
