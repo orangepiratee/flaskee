@@ -8,6 +8,14 @@ Base = declarative_base()
 metadata = Base.metadata
 
 
+class TCategory(Base):
+    __tablename__ = 't_category'
+
+    category_id = Column(INTEGER(11), primary_key=True)
+    category_name = Column(String(255), nullable=False)
+    category_available = Column(INTEGER(11), nullable=False, server_default=text("'1'"))
+
+
 class TUser(Base):
     __tablename__ = 't_user'
 

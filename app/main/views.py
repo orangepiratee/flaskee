@@ -51,114 +51,63 @@ def count_notifications():
     return jsonify(data)
 
 
-conn = get_conn()
-cursor = conn.cursor()
-
-months = ['1','2','3','4','5',',6',',7']
-today = datetime.now().strftime('%Y-%m-%d')
-now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-
-
-def count_data_bytime(userid,n=0):
-    delta = timedelta(days=n)
-    n_days = datetime.now() - delta
-    time_start = n_days.strftime('%Y-%m-%d')
-    num_Items = select(cursor,"select count(*) from flaskee.t_item where item_author = '{}' "
-                              "and item_datetime >= '{}'".format(userid,time_start))
-    return num_Items
-
-def count_data_bymonth(userid,y=2019,m=0):
-    m_start = '{}-{}'.format(y,m)
-    m_end = '{}-{}'.format(y,m+1)
-    num_items = select(cursor,"select count(*) from flaskee.t_item where item_author = '{}' "
-                              "and item_datetime >= '{}' and item_datetime < '{}'".format(userid,m_start,m_end))
-    return num_items
-
-def count_data_byyear(userid,y=2019):
-    num_items = select(cursor,"select count(*) from flaskee.t_item where item_author = '{}' "
-                              "and item_datetime >= '{}' and item_datetime < '{}'".format(userid,y,y+1))
-    return num_items
-
-def count_today(userid=0):
-    if userid == 0:
-        num_items = select(cursor, "select count(*) from flaskee.t_item where to_days(item_datetime) = to_days(now());")
-    else:
-        num_items = select(cursor,"select count(*) from flaskee.t_item where item_author = '{}' "
-                        "and to_days(item_datetime) = to_days(now());".format(userid))
-    return num_items
-
-def count_thismonth(userid=0):
-    if userid == 0:
-        num_items = select(cursor, "select count(*) from flaskee.t_item where date_format(item_datetime,'%Y%m') = date_format(curdate(),'%Y%m');")
-    else:
-        num_items = select(cursor,"select count(*) from flaskee.t_item where item_author = '{}' "
-                              "and date_format(item_datetime,'%Y%m') = date_format(curdate(),'%Y%m');".format(userid))
-    return num_items
-
-def count_thisweek(userid=0):
-    if userid == 0:
-        num_items = select(cursor, "select count(*) from flaskee.t_item where yearweek(date_format(item_datetime,'%Y-%m-%d')) = yearweek(now())")
-    else:
-        num_items = select(cursor,"select count(*) from flaskee.t_item where item_author = '{}' "
-                              "and yearweek(date_format(item_datetime,'%Y-%m-%d')) = yearweek(now())".format(userid))
-    return num_items
-
-def count_thisyear(userid=0):
-    if userid ==0:
-        num_items = select(cursor, "select count(*) from flaskee.t_item year(item_datetime) = year(now())")
-    else:
-        num_items = select(cursor,"select count(*) from flaskee.t_item where item_author = '{}' "
-                              "and year(item_datetime) = year(now())".format(userid))
-    return num_items
-
-def count_thisseason(userid=0):
-    if userid ==0:
-        num_items = select(cursor, "select count(*) from flaskee.t_item where quarter(item_datetime) = quarter(now())")
-    else:
-        num_items = select(cursor,"select count(*) from flaskee.t_item where item_author = '{}' "
-                              "and quarter(item_datetime) = quarter(now())".format(userid))
-    return num_items
-
 sqls = ["",
-        "select * from 表名 where (时间字段名) = to_days(now());",#today
-        "SELECT * FROM 表名 WHERE TO_DAYS( NOW( ) ) - TO_DAYS( 时间字段名) <= 1;",#yesterday
-        "SELECT * FROM 表名 where DATE_SUB(CURDATE(), INTERVAL 7 DAY) <= date(时间字段名);",#last 7days
-        "SELECT * FROM 表名 WHERE DATE_FORMAT( 时间字段名, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )",#this month
-        "SELECT * FROM 表名 WHERE PERIOD_DIFF( date_format( now( ) , '%Y%m' ) , date_format( 时间字段名, '%Y%m' ) ) =1",#last month
-        "select * from 表名 where QUARTER(时间字段名)=QUARTER(now());",#this season
-        "select * from 表名 where QUARTER(时间字段名)=QUARTER(DATE_SUB(now(),interval 1 QUARTER));",#last season
-        "select * from 表名 where YEAR(时间字段名)=YEAR(NOW())",#this year
-        "select * from 表名 where year(时间字段名)=year(date_sub(now(),interval 1 year));",#last year
-        "SELECT * FROM 表名 WHERE YEARWEEK(date_format(时间字段名,'%Y-%m-%d')) = YEARWEEK(now());",#this week
-        "SELECT *  FROM 表名 WHERE YEARWEEK(date_format(时间字段名,'%Y-%m-%d')) = YEARWEEK(now())-1;",#last week
-        "select * from enterprise where date_format(时间字段名,'%Y-%m')=date_format(DATE_SUB(curdate(), INTERVAL 1 MONTH),'%Y-%m');"#last month
-        ]
+        "select count(*) from flaskee.t_item where to_days(item_datetime) = to_days(now())", ## today
+        "select count(*) from flaskee.t_item where yearweek(date_format(item_datetime,'%Y-%m-%d')) = yearweek(now())", ## this week
+        "select count(*) from flaskee.t_item where date_format(item_datetime,'%Y%m') = date_format(curdate(),'%Y%m')", ## this month
+        "select count(*) from flaskee.t_item where quarter(item_datetime) = quarter(now())", ## this season
+        "select count(*) from flaskee.t_item where year(item_datetime) = year(now())", ## this year
+        ""]
+
+def count_num(userid=0,category=0,index=0):
+    conn = get_conn()
+    cursor = conn.cursor()
+    # get all items ignore userid and category
+    if userid == 0 and category == 0:
+        num_items = select(cursor, sqls[index])
+    # get all category items by userid
+    elif userid != 0 and category == 0:
+        num_items = select(cursor, sqls[index]+" and item_author = '{}' ".format(userid))
+    # get all user items by category
+    elif userid == 0 and category != 0:
+        num_items = select(cursor, sqls[index]+" and item_category = '{}' ".format(category))
+    # get items by userid and category
+    elif userid != 0 and category != 0:
+        num_items = select(cursor, sqls[index]+" and item_author = '{}' and item_category = '{}' ".format(userid,category))
+    cursor.close()
+    conn.close()
+    return num_items
+
+
+## categorys = Category.query.filter_by(category_available=1).all()
 
 def count_data():
     num_unread = Item.query.filter_by(item_read=0).count()
     num_users = User.query.filter_by(user_available=1).count()
     num_items = Item.query.filter_by(item_delete=0).count()
-    num_items_today = count_today()
+    num_items_today = count_num(index=1)
     data = {'num_unread': num_unread, 'num_users': num_users, 'num_items': num_items, 'num_items_today':num_items_today}
     users = User.query.filter_by(user_available=1).all()
+    categorys = Category.query.filter_by(category_available=1).all()
     data['users'] = {}
     inx = 1
     for user in users:
         if user.user_name:
-            temp_total = Item.query.filter_by(item_author=user.user_id).count()
-            temp_accept = Item.query.filter_by(item_author=user.user_id).filter_by(item_accept=1).count()
-            temp_reject = Item.query.filter_by(item_author=user.user_id).filter_by(item_accept=0).count()
-            temp_unread = Item.query.filter_by(item_author=user.user_id).filter_by(item_read=0).count()
-            num_today = count_today(user.user_id)
-            num_month = count_thismonth(user.user_id)
-            num_week = count_thisweek(user.user_id)
-            num_year = count_thisyear(user.user_id)
-            num_season = count_thisseason(user.user_id)
-            data['users'][user.user_name] = {'inx':inx,'total': temp_total, 'accept': temp_accept, 'reject': temp_reject,
-                                             'unread': temp_unread, 'percentage':int(temp_total/num_items*100),
-                                             'num_today':num_today,'num_week':num_week,'num_month':num_month,'num_season':num_season,
-                                             'num_year':num_year}
-            inx +=1
+            num_total = Item.query.filter_by(item_author=user.user_id).count()
+            num_accept = Item.query.filter_by(item_author=user.user_id).filter_by(item_accept=1).count()
+            num_reject = Item.query.filter_by(item_author=user.user_id).filter_by(item_accept=0).count()
+            num_unread = Item.query.filter_by(item_author=user.user_id).filter_by(item_read=0).count()
+            data['users'][user.user_name] = {'inx': inx, 'total': num_total, 'accept': num_accept, 'reject': num_reject,
+                                             'unread': num_unread, 'percentage': int(num_total / num_items * 100)}
+            inx += 1
+            for category in categorys:
+                num_today = count_num(userid=user.user_id,category=category,index=1)
+                num_week = count_num(userid=user.user_id, category=category, index=2)
+                num_month = count_num(userid=user.user_id,category=category,index=3)
+                num_season = count_num(userid=user.user_id, category=category, index=4)
+                num_year = count_num(userid=user.user_id,category=category,index=5)
+                data['users'][user.user_name][category] = {'num_today':num_today,'num_week':num_week,'num_month':num_month,
+                                                           'num_season':num_season,'num_year':num_year}
         else:
             continue
     return data

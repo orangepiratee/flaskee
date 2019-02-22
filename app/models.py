@@ -141,6 +141,12 @@ class Comment(db.Model):
     #t_user = db.relationship('User')
     #t_item = db.relationship('Item')
 
+class Category(db.Model):
+    __tablename__ = 't_category'
+
+    category_id = Column(INTEGER(11), primary_key=True)
+    category_name = Column(String(255), nullable=False)
+    category_available = Column(INTEGER(11), nullable=False, server_default=text("'1'"))
 
 class Post(db.Model):
     __tablename__ = 't_post'

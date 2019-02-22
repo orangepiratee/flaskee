@@ -101,10 +101,11 @@
                             <div class="progress-box progress-2">
                                 <h4 class="por-title">{{ key }}</h4>
                                 <div class="por-txt">
-                                    <strong><span >{{ value['total'] }}</span></strong> Items ({{ value['percentage'] }}%),
-
+                                    <strong><span >Total {{ value['total'] }}</span></strong> Items ({{ value['percentage'] }}%),
+                                    <span>{{ value['accept'] }}</span> Accpet Items,
+                                    <span>{{ value['unread'] }}</span> Unread Items
                                 </div>
-                                <div class="progress mb-2" style="height: 5px;">
+                                <div class="progress mb-3" style="height: 5px;">
                                     <div  class="progress-bar bg-flat-color-{{ value['inx'] }}" role="progressbar"
                                          style="width: {{ value['percentage'] }}%;" aria-valuenow="{{ value['percentage'] }}" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
