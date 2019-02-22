@@ -50,6 +50,9 @@ def count_notifications():
         pass
     return jsonify(data)
 
+@main.route('/get_num/<int:inx>',methods=['GET'])
+def get_num(inx):
+    pass
 
 sqls = ["",
         "select count(*) from flaskee.t_item where to_days(item_datetime) = to_days(now())", ## today
@@ -58,6 +61,8 @@ sqls = ["",
         "select count(*) from flaskee.t_item where quarter(item_datetime) = quarter(now())", ## this season
         "select count(*) from flaskee.t_item where year(item_datetime) = year(now())", ## this year
         ""]
+
+period = ['total','today','week','month','season','year']
 
 def count_num(userid=0,category=0,index=0):
     conn = get_conn()
@@ -79,8 +84,6 @@ def count_num(userid=0,category=0,index=0):
     return num_items
 
 
-## categorys = Category.query.filter_by(category_available=1).all()
-
 def count_data():
     num_unread = Item.query.filter_by(item_read=0).count()
     num_users = User.query.filter_by(user_available=1).count()
@@ -89,6 +92,9 @@ def count_data():
     data = {'num_unread': num_unread, 'num_users': num_users, 'num_items': num_items, 'num_items_today':num_items_today}
     users = User.query.filter_by(user_available=1).all()
     categorys = Category.query.filter_by(category_available=1).all()
+    data['categorys'] = {}
+    for cate in categorys:
+        data['categorys'][cate.category_id]=cate.category_name
     data['users'] = {}
     inx = 1
     for user in users:
@@ -100,14 +106,15 @@ def count_data():
             data['users'][user.user_name] = {'inx': inx, 'total': num_total, 'accept': num_accept, 'reject': num_reject,
                                              'unread': num_unread, 'percentage': int(num_total / num_items * 100)}
             inx += 1
-            for category in categorys:
-                num_today = count_num(userid=user.user_id,category=category,index=1)
-                num_week = count_num(userid=user.user_id, category=category, index=2)
-                num_month = count_num(userid=user.user_id,category=category,index=3)
-                num_season = count_num(userid=user.user_id, category=category, index=4)
-                num_year = count_num(userid=user.user_id,category=category,index=5)
-                data['users'][user.user_name][category] = {'num_today':num_today,'num_week':num_week,'num_month':num_month,
-                                                           'num_season':num_season,'num_year':num_year}
+            for i in range(1,6):
+                data['users'][user.user_name][period[i]] = {}
+                for category in categorys:
+                    num = count_num(userid=user.user_id,category=category.category_id,index=i)
+                    data['users'][user.user_name][period[i]][category.category_name] = num
+                    temp_total = count_num(userid=user.user_id,index=i)
+                    data['users'][user.user_name][period[i]]['total'] = temp_total
+                    #data['users'][user.user_name][category.category_name] = {'num_today':num_today,'num_week':num_week,'num_month':num_month,
+                    #                                           'num_season':num_season,'num_year':num_year}
         else:
             continue
     return data

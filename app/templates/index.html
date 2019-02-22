@@ -4,82 +4,79 @@
 {% block title %}All Items{% endblock %}
 {% block page_content %}
     <!-- /Widgets -->
-                <div class="row">
-                    <div class="col-sm-6 col-lg-3">
-                        <div class="card text-white bg-flat-color-1">
-                            <div class="card-body">
-                                <div class="card-left pt-1 float-left">
-                                    <h3 class="mb-0 fw-r">
-                                        <span class="currency float-left mr-1"></span>
-                                        <span class="count">{{ data['num_items'] }}</span>
-                                    </h3>
-                                    <p class="text-light mt-1 m-0">Total Items</p>
-                                </div><!-- /.card-left -->
-                                <div class="card-right float-right text-right">
-                                    <i class="icon fade-5 icon-lg pe-7s-browser"></i>
-                                </div><!-- /.card-right -->
-                            </div>
-                        </div>
-                    </div>
-                    <!--/.col-->
-
-                    <div class="col-sm-6 col-lg-3">
-                        <div class="card text-white bg-flat-color-6">
-                            <div class="card-body">
-                                <div class="card-left pt-1 float-left">
-                                    <h3 class="mb-0 fw-r">
-                                        <span class="count float-left">{{ data['num_users'] }}</span>
-                                        <span><br></span>
-                                    </h3>
-                                    <p class="text-light mt-1 m-0">Today Users</p>
-                                </div><!-- /.card-left -->
-
-                                <div class="card-right float-right text-right">
-                                    <i class="icon fade-5 icon-lg pe-7s-users"></i>
-                                </div><!-- /.card-right -->
-                            </div>
-                        </div>
-                    </div>
-                    <!--/.col-->
-
-                    <div class="col-sm-6 col-lg-3">
-                        <div class="card text-white bg-flat-color-3">
-                            <div class="card-body">
-                                <div class="card-left pt-1 float-left">
-                                    <h3 class="mb-0 fw-r">
-                                        <span class="count">{{ data['num_items_today'] }}</span>
-                                    </h3>
-                                    <p class="text-light mt-1 m-0">Today Total Items</p>
-                                </div><!-- /.card-left -->
-                                <div class="card-right float-right text-right">
-                                    <i class="icon fade-5 icon-lg pe-7s-ball"></i>
-                                </div><!-- /.card-right -->
-                            </div>
-                        </div>
-                    </div>
-                    <!--/.col-->
-
-                    <div class="col-sm-6 col-lg-3">
-                        <div class="card text-white bg-flat-color-2">
-                            <div class="card-body">
-                                <div class="card-left pt-1 float-left">
-                                    <h3 class="mb-0 fw-r">
-                                        <span class="count">{{ data['num_unread'] }}</span>
-                                    </h3>
-                                    <p class="text-light mt-1 m-0">Unread Items</p>
-                                </div><!-- /.card-left -->
-
-                                <div class="card-right float-right text-right">
-                                    <i class="icon fade-5 icon-lg pe-7s-unlock"></i>
-                                </div><!-- /.card-right -->
-                            </div>
-                        </div>
-                    </div>
-                    <!--/.col-->
+    <div class="row">
+        <div class="col-sm-6 col-lg-3">
+            <div class="card text-white bg-flat-color-1">
+                <div class="card-body">
+                    <div class="card-left pt-1 float-left">
+                        <h3 class="mb-0 fw-r">
+                            <span class="currency float-left mr-1"></span>
+                            <span class="count">{{ data['num_items'] }}</span>
+                        </h3>
+                        <p class="text-light mt-1 m-0">Total Items</p>
+                    </div><!-- /.card-left -->
+                    <div class="card-right float-right text-right">
+                        <i class="icon fade-5 icon-lg pe-7s-browser"></i>
+                    </div><!-- /.card-right -->
                 </div>
-{{ data }}
+            </div>
+        </div>
+        <!--/.col-->
 
+        <div class="col-sm-6 col-lg-3">
+            <div class="card text-white bg-flat-color-6">
+                <div class="card-body">
+                    <div class="card-left pt-1 float-left">
+                        <h3 class="mb-0 fw-r">
+                            <span class="count float-left">{{ data['num_users'] }}</span>
+                            <span><br></span>
+                        </h3>
+                        <p class="text-light mt-1 m-0">Today Users</p>
+                    </div><!-- /.card-left -->
 
+                    <div class="card-right float-right text-right">
+                        <i class="icon fade-5 icon-lg pe-7s-users"></i>
+                    </div><!-- /.card-right -->
+                </div>
+            </div>
+        </div>
+        <!--/.col-->
+
+        <div class="col-sm-6 col-lg-3">
+            <div class="card text-white bg-flat-color-3">
+                <div class="card-body">
+                    <div class="card-left pt-1 float-left">
+                        <h3 class="mb-0 fw-r">
+                            <span class="count">{{ data['num_items_today'] }}</span>
+                        </h3>
+                        <p class="text-light mt-1 m-0">Today Total Items</p>
+                    </div><!-- /.card-left -->
+                    <div class="card-right float-right text-right">
+                        <i class="icon fade-5 icon-lg pe-7s-ball"></i>
+                    </div><!-- /.card-right -->
+                </div>
+            </div>
+        </div>
+        <!--/.col-->
+
+        <div class="col-sm-6 col-lg-3">
+            <div class="card text-white bg-flat-color-2">
+                <div class="card-body">
+                    <div class="card-left pt-1 float-left">
+                        <h3 class="mb-0 fw-r">
+                            <span class="count">{{ data['num_unread'] }}</span>
+                        </h3>
+                        <p class="text-light mt-1 m-0">Unread Items</p>
+                    </div><!-- /.card-left -->
+
+                    <div class="card-right float-right text-right">
+                        <i class="icon fade-5 icon-lg pe-7s-unlock"></i>
+                    </div><!-- /.card-right -->
+                </div>
+            </div>
+        </div>
+        <!--/.col-->
+    </div>
 
     <!--  Traffic  -->
     <div class="row">
@@ -123,27 +120,32 @@
                             </div>
                             <div class="card-body">
                                 <table class="table table-striped table-hover table-align-middle mb-0">
+                                    <div class="col-2 ">
+                                        <select name="select_category" id="select" class="form-control">
+                                            <option value="0">today</option>
+                                            <option value="1">this week</option>
+                                            <option value="2">this month</option>
+                                            <option value="3">this season</option>
+                                            <option value="4">this year</option>
+                                        </select>
+                                    </div>
                                     <thead>
                                         <tr>
                                             <th scope="col">Users</th>
-                                            <th scope="col">Category A</th>
-                                            <th scope="col">Category B</th>
-                                            <th scope="col">Category C</th>
-                                            <th scope="col">Category D</th>
-                                            <th scope="col">Category E</th>
-                                            <th scope="col">Category F</th>
-                                            <th scope="col">Time Period</th>
+                                            {% for key,value in data['categorys'].items() %}
+                                            <th scope="col">{{ value }}</th>
+                                            {% endfor %}
+                                            <th scope="col">Sum</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                     {% for key,value in data['users'].items() %}
                                         <tr >
                                             <th scope="row">{{ key }}</th>
-                                            <td>{{ value['num_today'] }}</td>
-                                            <td>{{ value['num_week'] }}</td>
-                                            <td>{{ value['num_month'] }}</td>
-                                            <td>{{ value['num_season'] }}</td>
-                                            <td>{{ value['num_year'] }}</td>
+                                            {% for id,name in data['categorys'].items() %}
+                                            <td>{{ value['year'][name] }}</td>
+                                            {% endfor %}
+                                            <td>{{ value['year']['total'] }}</td>
                                         </tr>
                                     {% endfor %}
 
@@ -159,6 +161,7 @@
         </div><!-- /# column -->
     </div>
     <!--  /Traffic -->
+{{ data }}
 <!--
     <div class="col-xl-12">
         <div class="row">
