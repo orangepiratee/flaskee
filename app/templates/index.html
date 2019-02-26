@@ -109,59 +109,102 @@
 
                             </div>
                             {% endfor %}
-
                         </div> <!-- /.card-body -->
                     </div>
-                    </div>
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <strong class="card-title">Users statistics</strong>
-                            </div>
-                            <div class="card-body">
-                                <table class="table table-striped table-hover table-align-middle mb-0">
-                                    <div class="col-2 ">
-                                        <select name="select_category" id="select" class="form-control">
-                                            <option value="0">today</option>
-                                            <option value="1">this week</option>
-                                            <option value="2">this month</option>
-                                            <option value="3">this season</option>
-                                            <option value="4">this year</option>
-                                        </select>
-                                    </div>
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Users</th>
-                                            {% for key,value in data['categorys'].items() %}
-                                            <th scope="col">{{ value }}</th>
-                                            {% endfor %}
-                                            <th scope="col">Sum</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    {% for key,value in data['users'].items() %}
-                                        <tr >
-                                            <th scope="row">{{ key }}</th>
-                                            {% for id,name in data['categorys'].items() %}
-                                            <td>{{ value['year'][name] }}</td>
-                                            {% endfor %}
-                                            <td>{{ value['year']['total'] }}</td>
-                                        </tr>
-                                    {% endfor %}
-
-                                    </tbody>
-                                </table>
-                            </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong class="card-title">Users statistics</strong>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-striped table-hover table-align-middle mb-0">
+                                <div class="col-2 ">
+                                    <select name="select_category" id="select" onchange="load_user_sta(this.value)" class="form-control">
+                                        <option value="1">today</option>
+                                        <option value="2">this week</option>
+                                        <option value="3">this month</option>
+                                        <option value="4">this season</option>
+                                        <option value="5">this year</option>
+                                    </select>
+                                </div>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Users</th>
+                                        {% for key,value in data['categorys'].items() %}
+                                        <th scope="col">{{ value }}</th>
+                                        {% endfor %}
+                                        <th scope="col">Sum</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="user_sta_1">
+                                {% for key,value in data['users'].items() %}
+                                    <tr>
+                                        <th scope="row">{{ key }}</th>
+                                        {% for id,name in data['categorys'].items() %}
+                                        <td>{{ value['today'][name] }}</td>
+                                        {% endfor %}
+                                        <td>{{ value['today']['total'] }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                                <tbody id="user_sta_2" style="display: none;">
+                                {% for key,value in data['users'].items() %}
+                                    <tr>
+                                        <th scope="row">{{ key }}</th>
+                                        {% for id,name in data['categorys'].items() %}
+                                        <td>{{ value['week'][name] }}</td>
+                                        {% endfor %}
+                                        <td>{{ value['week']['total'] }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                                <tbody id="user_sta_3" style="display: none;">
+                                {% for key,value in data['users'].items() %}
+                                    <tr>
+                                        <th scope="row">{{ key }}</th>
+                                        {% for id,name in data['categorys'].items() %}
+                                        <td>{{ value['month'][name] }}</td>
+                                        {% endfor %}
+                                        <td>{{ value['month']['total'] }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                                <tbody id="user_sta_4" style="display: none;">
+                                {% for key,value in data['users'].items() %}
+                                    <tr>
+                                        <th scope="row">{{ key }}</th>
+                                        {% for id,name in data['categorys'].items() %}
+                                        <td>{{ value['season'][name] }}</td>
+                                        {% endfor %}
+                                        <td>{{ value['season']['total'] }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                                <tbody id="user_sta_5" style="display: none;">
+                                {% for key,value in data['users'].items() %}
+                                    <tr>
+                                        <th scope="row">{{ key }}</th>
+                                        {% for id,name in data['categorys'].items() %}
+                                        <td>{{ value['year'][name] }}</td>
+                                        {% endfor %}
+                                        <td>{{ value['year']['total'] }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-
+                </div>
                 </div> <!-- /.row -->
-                <div class="card-body"></div>
+
             </div>
         </div><!-- /# column -->
     </div>
     <!--  /Traffic -->
-{{ data }}
+
 <!--
     <div class="col-xl-12">
         <div class="row">
@@ -223,9 +266,12 @@
     <!-- /# column -->
 
 <script>
-    $(function () {
-        alert('onready');
-    });
+    function load_user_sta(str) {
+        for (var i =1;i<6;i++){
+            document.getElementById('user_sta_'+i).style.display='none';
+        }
+        document.getElementById('user_sta_'+str).style.display='';
+    }
 </script>
 
 {% endblock %}
