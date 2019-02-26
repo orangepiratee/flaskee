@@ -21,7 +21,7 @@ def signin():
                 next = url_for('main.index')
             return redirect(next)
         flash('Invalid username or password!')
-    return render_template('/auth/signin.html', form=form)
+    return render_template('/auth/signin.html', form=form, pt2='Sign In')
 
 @auth.route('/signup', methods=['GET','POST'])
 def signup():
@@ -33,7 +33,7 @@ def signup():
         db.session.add(user)
         db.session.commit()
         return redirect(url_for('auth.signin'))
-    return render_template('/auth/signup.html', form=form)
+    return render_template('/auth/signup.html', form=form, pt2='Sign Up')
 
 @auth.route('/signout', methods=['GET','POST'])
 @login_required
