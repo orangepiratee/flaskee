@@ -9,7 +9,7 @@ from datetime import datetime
 from ..main.views import add_notification
 
 ALLOWED_EXTENSIONS = set(['pdf'])
-upload_dir = os.path.join(base_dir, 'upload')
+upload_dir = os.path.join(base_dir,'static/upload')
 if not os.path.exists(upload_dir):
         os.makedirs(upload_dir)
 
@@ -77,6 +77,6 @@ def management():
 @post.route('/show/<string:fname>',methods=['POST','GET'])
 @login_required
 def show(fname):
-    attachment=base_dir+'/upload/'+fname
+    attachment=fname
     return render_template('/post/show.html',attachment=attachment)
     #return redirect('http://127.0.0.1:5000/static/pdfjs/web/viewer.html?file://'+attachment)

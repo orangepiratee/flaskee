@@ -205,6 +205,23 @@
     </div>
     <!--  /Traffic -->
 
+<!-- Calender Chart Weather  -->
+
+        <div class="col-md-12 col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="calender-cont widget-calender">
+                        <div id="calendar"></div>
+                    </div>
+                </div>
+            </div><!-- /.card -->
+        </div>
+                <!-- /Calender Chart Weather -->
+
+    <script src="{{ url_for('static', filename='theme181/assets/calendar/fullcalendar.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='theme181/assets/calendar/fullcalendar-init.js') }}"></script>
+
+    <script src="{{ url_for('static', filename='theme181/assets/js/init/fullcalendar-init.js') }}"></script>
 
 <script>
     function load_user_sta(str) {
